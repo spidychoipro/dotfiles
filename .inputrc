@@ -1,0 +1,5 @@
+# UTF-8 support for readline
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
