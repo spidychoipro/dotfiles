@@ -1,86 +1,57 @@
-# History
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+# Created by newuser for 5.9.2
 
-# Prompt
-PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%# '
+# 141번(보라색), 212번(분홍색) 드라큘라 시그니처 프롬프트
+PROMPT="[%F{141}%n%f@%F{141}%m%f %F{212}%1~%f]$ "
 
-# Enable colored completion
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' menu select
-
-# Key bindings for Unicode/UTF-8 input
-bindkey -e
-
-# Korean UTF-8 support
+# Korean UTF-8 support (기본은 한글, 에러 메시지만 영어로!)
 export LANG=ko_KR.UTF-8
-export LC_ALL=ko_KR.UTF-8
+export LC_MESSAGES=en_US.UTF-8
 
-# Dracula Theme for zsh-syntax-highlighting
-# https://github.com/dracula/zsh-syntax-highlighting
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
-typeset -gA ZSH_HIGHLIGHT_STYLES
+# ==========================================
+# [Zsh 자동완성 및 비주얼 메뉴판 최적화]
+# ==========================================
 
-# Comments
-ZSH_HIGHLIGHT_STYLES[comment]='fg=#6272A4'
+# 1. 메뉴판 모듈 로드
+zmodload zsh/complist
 
-# Functions/methods
-ZSH_HIGHLIGHT_STYLES[alias]='fg=#50FA7B'
-ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#50FA7B'
-ZSH_HIGHLIGHT_STYLES[global-alias]='fg=#50FA7B'
-ZSH_HIGHLIGHT_STYLES[function]='fg=#50FA7B'
-ZSH_HIGHLIGHT_STYLES[command]='fg=#50FA7B'
-ZSH_HIGHLIGHT_STYLES[precommand]='fg=#50FA7B,italic'
-ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=#FFB86C,italic'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#FFB86C'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#FFB86C'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#BD93F9'
+# 2. 자동완성 상세 규칙 설정
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={a-zA-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select=0
 
-# Built ins
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=#8BE9FD'
-ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#8BE9FD'
-ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=#8BE9FD'
+# 3. 자동완성 엔진 가동
+autoload -Uz compinit
+compinit -i
 
-# Punctuation
-ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#FF79C6'
-ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-unquoted]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]='fg=#FF79C6'
-ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=#FF79C6'
-ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=#FF79C6'
+# 4. 메뉴 옵션 켜기 및 ls 색상 켜기
+setopt AUTO_MENU
+setopt CORRECT
+setopt CORRECT_ALL
+alias ls='ls --color=auto'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-# Strings
-ZSH_HIGHLIGHT_STYLES[command-substitution-quoted]='fg=#F1FA8C'
-ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter-quoted]='fg=#F1FA8C'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#F1FA8C'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]='fg=#FF5555'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#F1FA8C'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]='fg=#FF5555'
-ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=#F1FA8C'
+# ==========================================
+# [외부 플러그인 및 테마 로드]
+# ==========================================
 
-# Variables
-ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=#FF5555'
-ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[assign]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[named-fd]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=#F8F8F2'
+# 자동제안 플러그인 먼저 로드
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# No category relevant in spec
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#FF5555'
-ZSH_HIGHLIGHT_STYLES[path]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=#FF79C6'
-ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]='fg=#FF79C6'
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#BD93F9'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]='fg=#FF5555'
-ZSH_HIGHLIGHT_STYLES[redirection]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[arg0]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[default]='fg=#F8F8F2'
-ZSH_HIGHLIGHT_STYLES[cursor]='standout'
 
-# zsh-syntax-highlighting (Dracula theme must be before this)
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null || true
+# ★ [핵심] 공식 가이드 지침: zsh-syntax-highlighting 로드 "직전"에 Dracula 테마 로드
+if [ -f ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.sh ]; then
+  source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.sh
+fi
+
+# 구문 강조 플러그인 최종 로드
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ==========================================
+# [Neovim WSL 환경 설정]
+# ==========================================
+
+unalias nvim 2>/dev/null
+nvim() {
+  command /usr/bin/nvim \
+    --cmd 'luafile /mnt/c/Users/swpar/AppData/Local/nvim/lua/utils/wsl-terminal.lua' \
+    "$@"
+}
