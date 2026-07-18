@@ -1,16 +1,30 @@
 # dotfiles
 
-This repository contains my personal dotfiles and configuration files used on Linux.
+내 Linux 설정 파일들 모아놓은 저장소
 
-All of the configuration files I use on my Linux systems are managed here.
+설정 파일들 여기 다 있음
 
 ## Neovim
 
-My Neovim configuration is maintained in a separate repository:
+Neovim 설정은 별도 저장소에서 관리함
 
 👉 https://github.com/spidychoipro/neovim-config
 
+## WSL Setup
+
+WSL Arch Linux 셋업 스크립트는 `wsl/setup.sh`에 있음
+
+실행 방법:
+```bash
+bash setup.sh
+```
+
+설치되는 것들:
+- zsh + zsh-autosuggestions + zsh-syntax-highlighting (Dracula theme)
+- neovim, python, nodejs
+- 한국어 UTF-8 로케일
+
 ## Notes
 
-- These configurations are tailored to my personal workflow.
-- Use at your own discretion.
+- 개인 워크플로우에 맞게 세팅한 것들임
+- 참고용으로 쓰세요
