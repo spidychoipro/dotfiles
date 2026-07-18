@@ -39,8 +39,8 @@ echo "LANG=ko_KR.UTF-8" | sudo tee /etc/locale.conf
 # Copy dotfiles
 echo "[5/6] Copying dotfiles..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cp "$SCRIPT_DIR/../.inputrc" ~/.inputrc 2>/dev/null || true
-cp "$SCRIPT_DIR/../.zshrc" ~/.zshrc 2>/dev/null || true
+cp "$SCRIPT_DIR/.inputrc" ~/.inputrc 2>/dev/null || true
+cp "$SCRIPT_DIR/.zshrc" ~/.zshrc 2>/dev/null || true
 
 # Set zsh as default shell
 if [ "$SHELL" != "$(which zsh)" ]; then
