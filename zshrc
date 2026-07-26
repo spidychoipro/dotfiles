@@ -1,0 +1,30 @@
+# Created by newuser for 5.9.2
+PROMPT="[%F{141}%n%f@%F{141}%m%f %F{212}%1~%f]$"
+
+export LANG=ko_KR.UTF-8
+export LC_MESSAGES=en_US.UTF-8
+
+zmodload zsh/complist
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={a-zA-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select=0
+
+autoload -Uz compinit
+compinit -i
+
+setopt AUTO_MENU
+setopt CORRECT
+setopt CORRECT_ALL
+
+alias ls='ls --color=auto'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# rm 실행 시 항상 삭제 여부 확인 (-i: interactive)
+alias rm='rm -i'
+
+# 디렉터리나 파일이 3개 이상일 때 한 번 더 크게 경고받고 싶다면 (선택 사항)
+# alias rm='rm -I'
