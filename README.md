@@ -37,3 +37,10 @@ WSL이 아닌 실제 리눅스 머신용 설정은 아직 없음
 Neovim 설정은 별도 저장소에서 관리함
 
 👉 https://github.com/spidychoipro/neovim-config
+
+
+hyprland
+file manager thunar
+if can't open twerminal here then install exo and then install thumbler also
+
+
