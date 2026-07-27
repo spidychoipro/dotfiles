@@ -1,6 +1,12 @@
 # dotfiles
 
-> **개인 설정 파일입니다.** 참고용으로 쓰세요.
+> **이 설정은 개인 맞춤 설정입니다.** 그대로 복사하면 의도한 대로 작동하지 않을 수 있으니, 참고용으로만 활용하세요.
+
+## 환경 정보
+
+- **실제 리눅스 설정은 EndeavourOS Hyprland 환경에서 진행되었습니다.**
+- ArchLinux 기반 배포에서도 문제 없이 사용 가능할 것으로 예상됩니다.
+- WSL 환경과 실제 리눅스(bare metal) 설정은 **다릅니다.** 혼동하지 마세요.
 
 ## WSL 설정
 
@@ -26,21 +32,20 @@ bash setup.sh
 
 ## 실제 리눅스 (bare metal) 설정
 
-WSL이 아닌 실제 리눅스 머신용 설정은 아직 없음
+### Hyprland
 
-> WSL 설정과 실제 리눅스 설정은 **다릅니다.** 혼동하지 마세요.
-> - WSL: `wsl/` 폴더 참고
-> - 실제 리눅스: 아직 없음
+EndeavourOS Hyprland 환경 기반 설정
+
+### File Manager
+
+- Thunar 사용
+- Thunar에서 "여기에서 터미널 열기"가 안 될 경우:
+  1. `exo` 설치
+  2. `thumbler` 설치
 
 ## Neovim
 
 Neovim 설정은 별도 저장소에서 관리함
 
 👉 https://github.com/spidychoipro/neovim-config
-
-
-hyprland
-file manager thunar
-if can't open twerminal here then install exo and then install thumbler also
-
 
