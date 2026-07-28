@@ -113,6 +113,7 @@ hl.config({
     general = {
         gaps_in  = 5,
         gaps_out = 0,
+        smart_gaps = "no_gaps_when_only",
 
         border_size = 2,
 
