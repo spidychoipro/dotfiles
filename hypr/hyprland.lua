@@ -76,7 +76,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- Fcitx5 환경변수 추가
 hl.env("XMODIFIERS", "@im=fcitx")
 hl.env("QT_IM_MODULE", "fcitx")
-hl.env("GTK_IM_MODULE", "fcitx")
+
 
 hl.config({
     xwayland = {
@@ -111,9 +111,8 @@ hl.config({
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 0,
-        smart_gaps = "no_gaps_when_only",
+        gaps_in  = 20,
+        gaps_out = 40,
 
         border_size = 2,
 
