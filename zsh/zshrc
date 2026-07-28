@@ -1,7 +1,14 @@
 # Created by newuser for 5.9.2
-PROMPT="[%F{141}%n%f@%F{141}%m%f %F{212}%1~%f]$"
+# Replaced by starship prompt
+# PROMPT="[%F{141}%n%f@%F{141}%m%f %F{212}%1~%f]$"
+
+# Starship prompt
+eval "$(starship init zsh)"
 
 export PATH="$HOME/.opencode/bin:$PATH"
+
+export TERM=xterm-256color
+export COLORTERM=truecolor
 
 export LANG=ko_KR.UTF-8
 export LC_MESSAGES=en_US.UTF-8
@@ -33,3 +40,7 @@ alias rm='rm -i'
 
 # 디렉터리나 파일이 3개 이상일 때 한 번 더 크게 경고받고 싶다면 (선택 사항)
 # alias rm='rm -I'
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/hoco30/.local/bin:$PATH"
