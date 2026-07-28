@@ -26,16 +26,19 @@ dotfiles/
 ├── brave/                  # Brave 브라우저 설정
 │   ├── brave-flags.conf    # 브라우저 플래그 (스케일링 보정 등)
 │   └── install-brave-graceful-shutdown.sh
+├── fcitx5/                 # FCITX5 한글 입력기 설정
+│   └── config              # 한/영 키 매핑
 ├── hypr/                   # Hyprland 설정
 │   └── hyprland.lua
-├── kitty/                  # Kitty 터미널 설정
-│   └── kitty.conf
+├── kitty/                  # Kitty 터미널 설정 (Dracula 테마)
+│   ├── kitty.conf
+│   └── current-theme.conf
 ├── wsl/                    # WSL 전용 설정
 │   ├── .zshrc
 │   ├── .inputrc
 │   ├── setup.sh
 │   └── wsl.conf
-└── zsh/                    # zsh 설정
+└── zsh/                    # zsh 설정 (clear 스크롤백 fix 포함)
     └── zshrc
 ```
 
@@ -151,6 +154,11 @@ cp brave/brave-flags.conf ~/.config/brave-flags.conf
 # Kitty 설정 복사
 mkdir -p ~/.config/kitty
 cp kitty/kitty.conf ~/.config/kitty/kitty.conf
+cp kitty/current-theme.conf ~/.config/kitty/current-theme.conf
+
+# FCITX5 설정 복사
+mkdir -p ~/.config/fcitx5
+cp fcitx5/config ~/.config/fcitx5/config
 
 # zsh 설정 복사
 cp zsh/zshrc ~/.zshrc
@@ -202,6 +210,59 @@ env GDK_SCALE=0.8 GDK_DPI_SCALE=0.8 thunar
 - `xdg-open` 등 시스템이 브라우저를 직접 실행하면 플래그가 적용되지 않습니다.
 - 전역 환경변수로 설정하면 모든 경우에 적용됩니다.
 - **모니터 스케일이 1.0이면 이 보정이 필요 없습니다.**
+
+---
+
+## Kitty 테마 (Dracula)
+
+[Dracula](https://draculatheme.com/kitty) 테마 적용 + 커스텀 설정:
+
+- **글꼴**: JetBrainsMono Nerd Font 11pt
+- **테마**: Dracula (보라-녹색 계열)
+- **투명도**: 92% + `background_opacity`
+- **탭 바**: 하단 powerline 스타일
+- **커서**: beam (I-beam) 스타일
+- **여백**: `window_padding_width 8`
+
+테마 변경하려면:
+
+```bash
+kitty +kitten themes
+```
+
+---
+
+## FCITX5 한글 설정
+
+### 한/영 키가 안 될 때
+
+`~/.config/fcitx5/config`에서 `TriggerKeys`에 `Hangul` 추가:
+
+```
+[Hotkey/TriggerKeys]
+0=Control+space
+1=Zenkaku_Hankaku
+2=Alt+Alt_R
+3=Hangul
+```
+
+변경 후 fcitx5 재시작:
+
+```bash
+fcitx5 -r -d
+```
+
+---
+
+## zsh clear 스크롤백 fix
+
+`clear` 명령어가 화면만 지우고 스크롤백이 남아서 위로 스크롤하면 이전 출력이 보이는 문제:
+
+```bash
+alias clear='clear && printf "\\033[3J"'
+```
+
+`\033[3J`가 스크롤백 버퍼를 함께 초기화합니다.
 
 ---
 
