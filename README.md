@@ -38,7 +38,7 @@ EndeavourOS Hyprland 환경 기반 설정
 
 | 파일 | 용도 |
 |------|------|
-| `hyprland.lua` | Hyprland 메인 설정 (모니터 스케일 1.25) |
+| `hypr/hyprland.lua` | Hyprland 메인 설정 (모니터 스케일 1.25) |
 | `brave-flags.conf` | Brave 브라우저 플래그 설정 |
 
 ### Wayland Fractional Scaling 보정
