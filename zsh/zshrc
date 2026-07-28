@@ -1,6 +1,8 @@
 # Created by newuser for 5.9.2
 PROMPT="[%F{141}%n%f@%F{141}%m%f %F{212}%1~%f]$"
 
+export PATH="$HOME/.opencode/bin:$PATH"
+
 export LANG=ko_KR.UTF-8
 export LC_MESSAGES=en_US.UTF-8
 
@@ -15,6 +17,8 @@ compinit -i
 setopt AUTO_MENU
 setopt CORRECT
 setopt CORRECT_ALL
+
+CORRECT_IGNORE="opencode"
 
 alias ls='ls --color=auto'
 alias clear='clear && printf "\033[3J"'
