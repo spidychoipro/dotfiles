@@ -111,8 +111,8 @@ hl.config({
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 20,
-        gaps_out = 40,
+        gaps_in  = 5,
+        gaps_out = 20,
 
         border_size = 2,
 
