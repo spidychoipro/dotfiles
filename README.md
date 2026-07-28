@@ -36,6 +36,24 @@ bash setup.sh
 
 EndeavourOS Hyprland 환경 기반 설정
 
+| 파일 | 용도 |
+|------|------|
+| `hyprland.lua` | Hyprland 메인 설정 (모니터 스케일 1.25) |
+| `brave-flags.conf` | Brave 브라우저 플래그 설정 |
+
+### Wayland Fractional Scaling 보정
+
+Hyprland에서 `scale=1.25`를 사용할 때, Chromium 기반 브라우저(Brave)와 GTK 앱(Thunar)에서 이중 스케일링이 발생하여 UI가 과도하게 크게 표시되는 문제가 있습니다.
+
+**해결 방법:**
+
+- **Brave**: `brave-flags.conf`에 `--force-device-scale-factor=0.8` 추가 (1.25의 역수로 보정)
+- **Thunar**: 실행 시 `GDK_SCALE=0.8 GDK_DPI_SCALE=0.8` 환경변수 적용
+
+`0.8 × 1.25 ≈ 1.0`이므로 원래 크기로 표시됩니다.
+
+> 참고: 시스템이 브라우저를 직접 실행할 때(예: `xdg-open`)는 이 플래그가 적용되지 않습니다. 전역 환경변수(`~/.zprofile` 등)에 설정하면 모든 경우에 적용됩니다.
+
 ### File Manager
 
 - Thunar 사용
