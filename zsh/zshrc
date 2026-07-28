@@ -17,6 +17,7 @@ setopt CORRECT
 setopt CORRECT_ALL
 
 alias ls='ls --color=auto'
+alias clear='clear && printf "\033[3J"'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
