@@ -1,0 +1,126 @@
+configuration {
+    modi:                       "drun";
+    show-icons:                 false;
+    drun-display-format:        "{name}";
+    font:                       "JetBrainsMono Nerd Font 10";
+    lines:                      4;
+    fixed-num-lines:            true;
+    kb-accept-entry:            "Control+m,Return,KP_Enter";
+    kb-remove-to-eol:           "";
+    kb-row-up:                  "Up,Control-p,Control-k,Alt-k";
+    kb-row-down:                "Down,Control-n,Control-j,Alt-j";
+}
+
+* {
+    background:                 #282A36;
+    foreground:                 #F8F8F2;
+    background-color:           @background;
+
+    normal-background:          @background;
+    normal-foreground:          @foreground;
+    alternate-normal-background:@background;
+    alternate-normal-foreground:@foreground;
+    selected-normal-background: #44475A;
+    selected-normal-foreground: #FAFAFA;
+
+    border-color:               #6272A4;
+    separatorcolor:             @border-color;
+    scrollbar-handle:           #BD93F9;
+
+    spacing:                    1;
+}
+
+window {
+    background-color:   @background;
+    border:             1;
+    border-color:       @border-color;
+    border-radius:      10px;
+    padding:            0;
+    width:              300;
+    location:           center;
+    transparency:       "real";
+}
+
+mainbox {
+    padding:            5px;
+    spacing:            0;
+    children:           [ inputbar, listview ];
+}
+
+inputbar {
+    background-color:   @background;
+    padding:            7px 9px;
+    spacing:            0;
+    children:           [ entry ];
+}
+
+entry {
+    text-color:         @foreground;
+    placeholder:        "Search";
+    placeholder-color:  #6272A4;
+    spacing:            0;
+    cursor:             text;
+}
+
+listview {
+    lines:              4;
+    fixed-height:       true;
+    padding:            0px;
+    spacing:            1px;
+    scrollbar:          false;
+    dynamic:            true;
+    layout:             vertical;
+    border:             0;
+}
+
+element {
+    padding:            6px 9px;
+    spacing:            0;
+    cursor:             pointer;
+    border:             1px;
+    border-color:       transparent;
+    border-radius:      6px;
+}
+
+element normal.normal {
+    background-color:   @normal-background;
+    text-color:         @normal-foreground;
+}
+
+element selected.normal {
+    background-color:   @selected-normal-background;
+    text-color:         @selected-normal-foreground;
+    border-color:       #BD93F9;
+}
+
+element alternate.normal {
+    background-color:   @alternate-normal-background;
+    text-color:         @alternate-normal-foreground;
+}
+
+element-icon {
+    size:               1.1em;
+    background-color:   transparent;
+    text-color:         inherit;
+}
+
+element-text {
+    background-color:   transparent;
+    text-color:         inherit;
+    highlight:          inherit;
+    cursor:             inherit;
+}
+
+scrollbar {
+    width:              4px;
+    handle-width:       8px;
+    handle-color:       @scrollbar-handle;
+    border:             0;
+    padding:            0;
+}
+
+textbox-prompt-colon {
+    expand:             false;
+    str:                "";
+    text-color:         transparent;
+}

@@ -13,6 +13,7 @@ cd dotfiles
 
 `install.sh`가 자동으로:
 - hypr 설정 복사
+- Waybar와 Rofi 설정 복사
 - fcitx5 한글 설정 복사
 - kitty 설정 복사
 - zsh 설정 복사
@@ -45,12 +46,40 @@ dotfiles/
 │   ├── hyprland.lua        # 메인 설정
 │   ├── hypridle.conf       # 절전
 │   ├── hyprlock.conf       # 잠금화면
-│   └── hyprpaper.conf      # 배경화면
+│   ├── hyprpaper.conf      # 배경화면
+│   ├── hyprlauncher.conf   # Hyprlauncher 설정
+│   └── hyprtoolkit.conf    # Dracula 테마
 ├── kitty/                  # Kitty 터미널 (Dracula)
+├── rofi/                   # Rofi 앱 런처 (Dracula 미니멀 테마)
 ├── starship/               # Starship prompt
-├── waybar/                 # Waybar 상태바
+├── waybar/                 # Waybar 상태바와 모듈 스크립트
 └── zsh/                    # Zsh 설정
 ```
+
+## 수동 설치 (복사 방식)
+
+심볼릭 링크 대신 파일을 직접 복사하고 싶다면 아래 블록 전체를 그대로 붙여넣으세요.
+기존 설정은 `~/.config-backup-날짜` 폴더에 백업됩니다.
+
+```bash
+cd ~
+git clone https://github.com/spidychoipro/dotfiles.git
+cd dotfiles
+
+backup_dir="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$backup_dir"
+for app in hypr waybar rofi; do
+  [ -e "$HOME/.config/$app" ] && mv "$HOME/.config/$app" "$backup_dir/"
+done
+
+mkdir -p ~/.config
+cp -a hypr ~/.config/
+cp -a waybar ~/.config/
+cp -a rofi ~/.config/
+hyprctl reload
+```
+
+Rofi는 `Super + Space`로 열며, `Ctrl-j` / `Ctrl-k`로 결과를 이동하고 `Enter`로 실행합니다.
 
 ## 주요 설정
 

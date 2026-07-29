@@ -37,7 +37,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "env GDK_SCALE=0.8 GDK_DPI_SCALE=0.8 thunar"
-local menu        = "hyprlauncher"
+local menu        = "rofi -show drun"
 
 
 -------------------
@@ -57,6 +57,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar & swaync & hypridle")
 	hl.exec_cmd("fcitx5 -d")
 	hl.exec_cmd("bash -c 'sed -i \"s/\\\"exit_type\\\":\\\"Crashed\\\"/\\\"exit_type\\\":\\\"Normal\\\"/\" ~/.config/BraveSoftware/Brave-Browser/Default/Preferences; sed -i \"s/\\\"exited_cleanly\\\":false/\\\"exited_cleanly\\\":true/\" ~/.config/BraveSoftware/Brave-Browser/Default/Preferences'")
+	-- blueman-applet 설치 후 주석 해제: hl.exec_cmd("bash -c 'pgrep blueman-applet || blueman-applet &'")
 end)
 
 -- end)
@@ -378,6 +379,12 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
+hl.layer_rule({
+    name  = "waybar-blur",
+    match = { namespace = "waybar" },
+    blur  = true,
+})
+
 -- Hyprland-run windowrule
 hl.window_rule({
     name  = "move-hyprland-run",
@@ -391,6 +398,13 @@ hl.window_rule({
     name  = "fcitx-pseudo",
     match = { class = "^fcitx$" },
     pseudo = true,
+})
+
+hl.window_rule({
+    name  = "rofi-dracula",
+    match = { class = "^rofi$" },
+    rounding  = 12,
+    no_shadow = true,
 })
 
 
