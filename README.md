@@ -29,10 +29,22 @@ dotfiles/
 ├── fcitx5/                 # FCITX5 한글 입력기 설정
 │   └── config              # 한/영 키 매핑
 ├── hypr/                   # Hyprland 설정
-│   └── hyprland.lua
+│   ├── hyprland.lua         # Hyprland 메인 설정
+│   ├── hypridle.conf        # 유휴 상태 잠금
+│   ├── hyprlock.conf        # 잠금 화면
+│   ├── hyprpaper.conf       # 배경화면
+│   ├── hyprlauncher.conf    # Hyprlauncher 설정
+│   └── hyprtoolkit.conf     # Hyprtoolkit Dracula 테마
 ├── kitty/                  # Kitty 터미널 설정 (Dracula 테마)
 │   ├── kitty.conf
 │   └── current-theme.conf
+├── rofi/                    # Rofi 앱 런처 (Dracula 미니멀 테마)
+│   └── config.rasi
+├── waybar/                  # Waybar 상태 표시줄
+│   ├── config
+│   ├── style.css
+│   ├── bluetooth.py
+│   └── mediaplayer.py
 ├── wsl/                    # WSL 전용 설정
 │   ├── .zshrc
 │   ├── .inputrc
@@ -132,21 +144,36 @@ sudo pacman -S brave-bin
 # Thunar (파일 매니저)
 sudo pacman -S thunar exo
 
-# 기타
-sudo pacman -S fcitx5 playerctl brightnessctl hyprshot hypridle
+# Hyprland 데스크톱 구성요소
+sudo pacman -S hyprland hyprlock hypridle hyprpaper waybar rofi swaync \
+  fcitx5 playerctl brightnessctl hyprshot wireplumber
+
+# 자주 쓰는 앱
+sudo pacman -S kitty thunar
 ```
 
-### 3단계: 이 dotfiles 적용
+### 3단계: 이 dotfiles 적용 (복사-붙여넣기 한 번)
+
+> 아래 명령은 기존 `hypr`, `waybar`, `rofi` 설정을 시간표시가 붙은 백업 폴더로 옮긴 뒤 이 저장소의 설정을 적용합니다.
+> 현재 설정을 유지하고 싶다면 이 단계를 실행하기 전에 백업 폴더를 확인하세요.
 
 ```bash
-# 저장소 클론
 cd ~
 git clone https://github.com/spidychoipro/dotfiles.git
 cd dotfiles
 
-# Hyprland 설정 복사
-mkdir -p ~/.config/hypr
-cp hypr/hyprland.lua ~/.config/hypr/hyprland.lua
+# 기존 설정 백업
+backup_dir="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$backup_dir"
+for app in hypr waybar rofi; do
+  [ -e "$HOME/.config/$app" ] && mv "$HOME/.config/$app" "$backup_dir/"
+done
+
+# Hyprland 데스크톱 설정 적용
+mkdir -p ~/.config
+cp -a hypr ~/.config/
+cp -a waybar ~/.config/
+cp -a rofi ~/.config/
 
 # Brave 설정 복사
 cp brave/brave-flags.conf ~/.config/brave-flags.conf
@@ -167,7 +194,18 @@ cp zsh/zshrc ~/.zshrc
 chsh -s /usr/bin/zsh
 ```
 
-### 4단계: Hyprland 재시작
+### 4단계: 내 화면에 맞게 딱 두 곳만 확인
+
+`hypr/hyprland.lua`의 모니터 설정과 `hypr/hyprpaper.conf`의 `eDP-1`은 노트북 내장 화면 기준입니다.
+외부 모니터를 쓴다면 먼저 현재 모니터 이름을 확인하세요.
+
+```bash
+hyprctl monitors
+```
+
+출력된 이름으로 `~/.config/hypr/hyprpaper.conf`의 `monitor = eDP-1` 부분을 바꾸고, 원하는 배경화면 경로도 설정합니다.
+
+### 5단계: Hyprland 재시작
 
 ```bash
 # 설정 리로드 (로그인 상태에서)
@@ -175,6 +213,8 @@ hyprctl reload
 
 # 또는 로그아웃 후 다시 로그인
 ```
+
+Rofi는 `Super + Space`로 열며, 결과 이동은 `Ctrl-j` / `Ctrl-k`, 실행은 `Enter`입니다.
 
 ---
 
