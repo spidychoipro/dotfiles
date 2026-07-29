@@ -1,313 +1,106 @@
 # dotfiles
 
-> **이 설정은 spidychoipro의 개인 설정입니다.**
-> 사용하는 기기, 해상도, 모니터 스케일, 키보드 레이아웃 등이 다르면 그대로 적용하면 의도대로 작동하지 않을 수 있습니다.
-> 참고용으로 보고自己的 환경에 맞게 수정해서 쓰세요.
+> spidychoipro의 Hyprland + EndeavourOS 설정
 
-## 내 환경 정보
+## 1 click install
+
+```bash
+cd ~
+git clone https://github.com/spidychoipro/dotfiles.git
+cd dotfiles
+./install.sh
+```
+
+`install.sh`가 자동으로:
+- hypr 설정 복사
+- Waybar와 Rofi 설정 복사
+- fcitx5 한글 설정 복사
+- kitty 설정 복사
+- zsh 설정 복사
+- zsh를 기본 셸로 변경
+
+**설치 후 재로그인 또는 `hyprctl reload`**
+
+---
+
+## 내 환경
 
 | 항목 | 값 |
 |------|------|
-| 배포판 | EndeavourOS (Arch 기반) |
-| DE/WM | Hyprland (Wayland) |
-| 노트북 | Dell Latitude 7390 |
-| 해상도 | 1920x1080 |
-| 모니터 스케일 | 1.25 |
+| 배포판 | EndeavourOS |
+| WM | Hyprland (Wayland) |
+| 디스플레이 | 1920x1080 @ 1.25x scale |
 | 터미널 | kitty |
 | 브라우저 | Brave |
-| 파일 매니저 | Thunar |
-
----
+| 한글 입력기 | Fcitx5 (Wayland native) |
 
 ## 폴더 구조
 
 ```
 dotfiles/
-├── brave/                  # Brave 브라우저 설정
-│   ├── brave-flags.conf    # 브라우저 플래그 (스케일링 보정 등)
-│   └── install-brave-graceful-shutdown.sh
-├── fcitx5/                 # FCITX5 한글 입력기 설정
-│   └── config              # 한/영 키 매핑
+├── install.sh              # 설치 스크립트
+├── backgrounds/            # 배경화면
+├── brave/                  # Brave flags (스케일링 보정)
+├── fcitx5/                 # Fcitx5 한글 설정
 ├── hypr/                   # Hyprland 설정
-│   ├── hyprland.lua         # Hyprland 메인 설정
-│   ├── hypridle.conf        # 유휴 상태 잠금
-│   ├── hyprlock.conf        # 잠금 화면
-│   ├── hyprpaper.conf       # 배경화면
-│   ├── hyprlauncher.conf    # Hyprlauncher 설정
-│   └── hyprtoolkit.conf     # Hyprtoolkit Dracula 테마
-├── kitty/                  # Kitty 터미널 설정 (Dracula 테마)
-│   ├── kitty.conf
-│   └── current-theme.conf
-├── rofi/                    # Rofi 앱 런처 (Dracula 미니멀 테마)
-│   └── config.rasi
-├── waybar/                  # Waybar 상태 표시줄
-│   ├── config
-│   ├── style.css
-│   ├── bluetooth.py
-│   └── mediaplayer.py
-├── wsl/                    # WSL 전용 설정
-│   ├── .zshrc
-│   ├── .inputrc
-│   ├── setup.sh
-│   └── wsl.conf
-└── zsh/                    # zsh 설정 (clear 스크롤백 fix 포함)
-    └── zshrc
+│   ├── hyprland.lua        # 메인 설정
+│   ├── hypridle.conf       # 절전
+│   ├── hyprlock.conf       # 잠금화면
+│   ├── hyprpaper.conf      # 배경화면
+│   ├── hyprlauncher.conf   # Hyprlauncher 설정
+│   └── hyprtoolkit.conf    # Dracula 테마
+├── kitty/                  # Kitty 터미널 (Dracula)
+├── rofi/                   # Rofi 앱 런처 (Dracula 미니멀 테마)
+├── starship/               # Starship prompt
+├── waybar/                 # Waybar 상태바와 모듈 스크립트
+└── zsh/                    # Zsh 설정
 ```
 
----
+## 수동 설치 (복사 방식)
 
-## WSL 설치 가이드
-
-### 사전 요구사항
-
-- Windows 10/11
-- PowerShell (관리자 권한)
-
-### 1단계: WSL + Arch Linux 설치
-
-PowerShell을 **관리자 권한**으로 열고:
-
-```powershell
-# WSL 설치
-wsl --install
-
-# 재부팅 후, Microsoft Store에서 "Arch Linux" 검색 후 설치
-```
-
-Microsoft Store에서 Arch Linux를 열면 유저 이름과 비밀번호를 설정하라는 메시지가 나옵니다.
-
-### 2단계: 기본 패키지 설치
-
-```bash
-# 시스템 업데이트
-sudo pacman -Syu
-
-# 필요한 것들 설치
-sudo pacman -S git curl zsh neovim python nodejs
-```
-
-### 3단계: 이 dotfiles 적용
-
-```bash
-# 저장소 클론
-cd ~
-git clone https://github.com/spidychoipro/dotfiles.git
-cd dotfiles
-
-# zsh 설정 복사
-cp zsh/zshrc ~/.zshrc
-cp wsl/.inputrc ~/.inputrc
-
-# 기본 셸을 zsh로 변경
-chsh -s /usr/bin/zsh
-```
-
-### 4단계: zsh 플러그인 설치 (선택)
-
-```bash
-# zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-# zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-```
-
-### 5단계: 완료
-
-터미널을 닫고 다시 열면 끝입니다.
-
----
-
-## 실제 리눅스 (Hyprland) 설치 가이드
-
-### 사전 요구사항
-
-- x86_64 PC (노트북 또는 데스크톱)
-- 인터넷 연결
-- USB 또는 DVD (부팅용)
-
-### 1단계: EndeavourOS 설치
-
-1. https://endeavouros.com 에서 ISO 다운로드
-2. Rufus (Windows) 또는 `dd` (Linux)로 USB에 굽기
-3. USB로 부팅 → 화면 안내에 따라 설치
-4. 설치 시 **Hyprland** 옵션 선택
-
-### 2단계: 필수 앱 설치
-
-터미널(kitty)에서:
-
-```bash
-# Brave 브라우저
-sudo pacman -S brave-bin
-
-# Thunar (파일 매니저)
-sudo pacman -S thunar exo
-
-# Hyprland 데스크톱 구성요소
-sudo pacman -S hyprland hyprlock hypridle hyprpaper waybar rofi swaync \
-  fcitx5 playerctl brightnessctl hyprshot wireplumber
-
-# 자주 쓰는 앱
-sudo pacman -S kitty thunar
-```
-
-### 3단계: 이 dotfiles 적용 (복사-붙여넣기 한 번)
-
-> 아래 명령은 기존 `hypr`, `waybar`, `rofi` 설정을 시간표시가 붙은 백업 폴더로 옮긴 뒤 이 저장소의 설정을 적용합니다.
-> 현재 설정을 유지하고 싶다면 이 단계를 실행하기 전에 백업 폴더를 확인하세요.
+심볼릭 링크 대신 파일을 직접 복사하고 싶다면 아래 블록 전체를 그대로 붙여넣으세요.
+기존 설정은 `~/.config-backup-날짜` 폴더에 백업됩니다.
 
 ```bash
 cd ~
 git clone https://github.com/spidychoipro/dotfiles.git
 cd dotfiles
 
-# 기존 설정 백업
 backup_dir="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$backup_dir"
 for app in hypr waybar rofi; do
   [ -e "$HOME/.config/$app" ] && mv "$HOME/.config/$app" "$backup_dir/"
 done
 
-# Hyprland 데스크톱 설정 적용
 mkdir -p ~/.config
 cp -a hypr ~/.config/
 cp -a waybar ~/.config/
 cp -a rofi ~/.config/
-
-# Brave 설정 복사
-cp brave/brave-flags.conf ~/.config/brave-flags.conf
-
-# Kitty 설정 복사
-mkdir -p ~/.config/kitty
-cp kitty/kitty.conf ~/.config/kitty/kitty.conf
-cp kitty/current-theme.conf ~/.config/kitty/current-theme.conf
-
-# FCITX5 설정 복사
-mkdir -p ~/.config/fcitx5
-cp fcitx5/config ~/.config/fcitx5/config
-
-# zsh 설정 복사
-cp zsh/zshrc ~/.zshrc
-
-# 기본 셸을 zsh로 변경
-chsh -s /usr/bin/zsh
-```
-
-### 4단계: 내 화면에 맞게 딱 두 곳만 확인
-
-`hypr/hyprland.lua`의 모니터 설정과 `hypr/hyprpaper.conf`의 `eDP-1`은 노트북 내장 화면 기준입니다.
-외부 모니터를 쓴다면 먼저 현재 모니터 이름을 확인하세요.
-
-```bash
-hyprctl monitors
-```
-
-출력된 이름으로 `~/.config/hypr/hyprpaper.conf`의 `monitor = eDP-1` 부분을 바꾸고, 원하는 배경화면 경로도 설정합니다.
-
-### 5단계: Hyprland 재시작
-
-```bash
-# 설정 리로드 (로그인 상태에서)
 hyprctl reload
-
-# 또는 로그아웃 후 다시 로그인
 ```
 
-Rofi는 `Super + Space`로 열며, 결과 이동은 `Ctrl-j` / `Ctrl-k`, 실행은 `Enter`입니다.
+Rofi는 `Super + Space`로 열며, `Ctrl-j` / `Ctrl-k`로 결과를 이동하고 `Enter`로 실행합니다.
+
+## 주요 설정
+
+### 한글 입력 (Fcitx5 + Wayland)
+
+- `GTK_IM_MODULE` 미설정 → Wayland text-input-v3 프로토콜 사용
+- `QT_IM_MODULE=fcitx` → Qt 앱은 IM module로 동작
+- 한/영 키: **Hangul** 키, **Ctrl+Space**
+- 문제 발생 시: `fcitx5-configtool`에서 Addons > Wayland 활성화 확인
+
+### 창 간격 (Gaps)
+
+- `gaps_in = 20, gaps_out = 40`
+
+### 모니터 스케일 보정 (1.25x)
+
+| 앱 | 방법 |
+|------|--------|
+| Brave | `brave-flags.conf`에 `--force-device-scale-factor=0.8` |
+| Thunar | 실행 명령: `env GDK_SCALE=0.8 GDK_DPI_SCALE=0.8 thunar` |
 
 ---
 
-## Wayland Fractional Scaling 보정
-
-내 모니터 스케일이 `1.25`인데, 이로 인해 Brave나 Thunar 같은 앱의 UI가 이중으로 스케일링되어 아주 크게 보이는 문제가 있었습니다.
-
-### 원리
-
-```
-보정 전: 브라우저(1.25x) × 컴포저(1.25x) = 1.56x (매우 큼)
-보정 후: 브라우저(0.8x) × 컴포저(1.25x) = 1.0x  (정상)
-```
-
-### Brave 보정
-
-`~/.config/brave-flags.conf`에 추가:
-
-```
---force-device-scale-factor=0.8
-```
-
-### Thunar 보정
-
-Hyprland 설정에서 Thunar 실행 명령어에 환경변수 추가:
-
-```
-env GDK_SCALE=0.8 GDK_DPI_SCALE=0.8 thunar
-```
-
-### 주의사항
-
-- `xdg-open` 등 시스템이 브라우저를 직접 실행하면 플래그가 적용되지 않습니다.
-- 전역 환경변수로 설정하면 모든 경우에 적용됩니다.
-- **모니터 스케일이 1.0이면 이 보정이 필요 없습니다.**
-
----
-
-## Kitty 테마 (Dracula)
-
-[Dracula](https://draculatheme.com/kitty) 테마 적용 + 커스텀 설정:
-
-- **글꼴**: JetBrainsMono Nerd Font 11pt
-- **테마**: Dracula (보라-녹색 계열)
-- **투명도**: 92% + `background_opacity`
-- **탭 바**: 하단 powerline 스타일
-- **커서**: beam (I-beam) 스타일
-- **여백**: `window_padding_width 8`
-
-테마 변경하려면:
-
-```bash
-kitty +kitten themes
-```
-
----
-
-## FCITX5 한글 설정
-
-### 한/영 키가 안 될 때
-
-`~/.config/fcitx5/config`에서 `TriggerKeys`에 `Hangul` 추가:
-
-```
-[Hotkey/TriggerKeys]
-0=Control+space
-1=Zenkaku_Hankaku
-2=Alt+Alt_R
-3=Hangul
-```
-
-변경 후 fcitx5 재시작:
-
-```bash
-fcitx5 -r -d
-```
-
----
-
-## zsh clear 스크롤백 fix
-
-`clear` 명령어가 화면만 지우고 스크롤백이 남아서 위로 스크롤하면 이전 출력이 보이는 문제:
-
-```bash
-alias clear='clear && printf "\\033[3J"'
-```
-
-`\033[3J`가 스크롤백 버퍼를 함께 초기화합니다.
-
----
-
-## Neovim
-
-별도 저장소에서 관리합니다:
-
-👉 https://github.com/spidychoipro/neovim-config
+기타: [Neovim config](https://github.com/spidychoipro/neovim-config)
