@@ -35,6 +35,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | **waybar** | 상단 상태바 |
 | **rofi** | 앱 실행기 (`Super+Space`) |
 | **swaync** | 🔔 알림 센터 (Dracula 스타일) |
+| **cliphist** | 📋 클립보드 히스토리 (`Super + V`) |
+| **swayosd** | 🔊 볼륨/밝기 OSD |
 | **fcitx5** | 한글 입력 |
 | **hyprlock + hypridle** | 잠금화면 + 자동 절전 |
 | **hyprpaper** | 배경화면 |
@@ -83,7 +85,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | `Super + C` | 창 닫기 |
 | `Super + Enter` | Master 레이아웃: 포커스된 창을 Master로 교체 |
 | `Super + F` | 전체화면 (토글) |
-| `Super + V` | 플로팅 전환 (토글) |
+| `Super + V` | **클립보드 히스토리** (cliphist → rofi로 검색/붙여넣기) |
+| `` Super + \` `` | **드롭다운 터미널** (위에서 내려오는 퀵 터미널, 같은 세션 유지) |
 | `Super + P` | Pseudo 타일링 전환 |
 
 ### 창 이동 (VIM 스타일)
@@ -147,6 +150,39 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 ---
 
+## 📋 클립보드 히스토리 (cliphist)
+
+`Super + V`를 누르면 Rofi로 클립보드 히스토리가 뜹니다.  
+방금 복사한 거, 몇 분 전에 복사한 거까지 검색해서 골라 붙여넣기 가능.
+
+```
+설치: sudo pacman -S cliphist
+```
+
+## ⌨️ 드롭다운 터미널
+
+`` Super + \` `` (grave 키) 를 누르면 화면 상단에서 터미널이 내려옵니다.
+
+```
+┌─────────────────────────────────┐
+│ $ _                        ← │  ← 상단 55% 덮음
+│                                  │     같은 세션 유지
+│                                  │     cd/vim 다 안 날아감
+└─────────────────────────────────┘
+│  브라우저 / 코드               │  ← 원래 작업공간
+│                                 │     레이아웃 영향 없음
+└─────────────────────────────────┘
+```
+
+- 다시 `` Super + \` `` → 사라짐
+- 같은 키티 세션 유지 (vim 열어놓고 닫았다 열어도 vim 살아있음)
+- `cd` 절대 안 날아감
+
+```
+설치: sudo pacman -S kitty (기본 설치)
+스크립트: toggle_term.sh
+```
+
 ## 🔔 알림 센터 (swaync)
 
 알림이 오면 오른쪽 상단에 **340px 미니멀 Dracula 카드**가 뜹니다.  
@@ -200,7 +236,8 @@ dotfiles/
 │   ├── hyprpaper.conf      ← 배경화면
 │   ├── hyprlauncher.conf   ← Hyprlauncher (참고용)
 │   ├── hyprtoolkit.conf    ← Hyprtoolkit Dracula 테마
-│   └── toggle_window_layout.sh ← 레이아웃 전환 스크립트
+│   ├── toggle_window_layout.sh ← 레이아웃 전환 스크립트
+│   └── toggle_term.sh          ← 드롭다운 터미널 스크립트
 ├── swaync/                 ← 알림 센터 (Dracula 미니멀 340px)
 │   ├── config.json         ← 설정
 │   └── style.css           ← Dracula 스타일

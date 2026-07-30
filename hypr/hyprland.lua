@@ -54,7 +54,8 @@ local menu        = "rofi -show drun"
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 hl.on("hyprland.start", function()
-	hl.exec_cmd("waybar & swaync & hypridle")
+	hl.exec_cmd("command -v swayosd-server && swayosd-server & waybar & swaync & hypridle")
+	hl.exec_cmd("command -v cliphist && wl-paste --watch cliphist store &")
 	hl.exec_cmd("fcitx5 -d")
 	hl.exec_cmd("bash -c 'sed -i \"s/\\\"exit_type\\\":\\\"Crashed\\\"/\\\"exit_type\\\":\\\"Normal\\\"/\" ~/.config/BraveSoftware/Brave-Browser/Default/Preferences; sed -i \"s/\\\"exited_cleanly\\\":false/\\\"exited_cleanly\\\":true/\" ~/.config/BraveSoftware/Brave-Browser/Default/Preferences'")
 	-- blueman-applet 설치 후 주석 해제: hl.exec_cmd("bash -c 'pgrep blueman-applet || blueman-applet &'")
@@ -69,8 +70,6 @@ end)
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
@@ -234,7 +233,7 @@ hl.config({
 hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        disable_hyprland_logo   = true,
     },
 })
 
@@ -288,8 +287,9 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("bash -c 'command -v cliphist 2>&1 >/dev/null && cliphist list | rofi -dmenu -p \"Clipboard\" | cliphist decode | wl-copy || hyprctl notify 2 3000 \"rgb(ff5555)\" \"install cliphist: sudo pacman -S cliphist\"'"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + grave", hl.dsp.exec_cmd("bash $HOME/.config/hypr/toggle_term.sh"))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
@@ -298,7 +298,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. "+ ALT + l", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + SHIFT + t", hl.dsp.exec_cmd("/home/hoco30/.config/hypr/toggle_window_layout.sh"))
+hl.bind(mainMod .. " + SHIFT + t", hl.dsp.exec_cmd("bash $HOME/.config/hypr/toggle_window_layout.sh"))
 hl.bind(mainMod .. "+ b", hl.dsp.exec_cmd("brave"))
 
 -- Move focus with mainMod + arrow keys
@@ -333,13 +333,13 @@ hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+-- Laptop multimedia keys for volume, OSD, and LCD brightness
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && swayosd-client --output-volume 5"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && swayosd-client --output-volume 5"),      { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && swayosd-client --output-volume live"),   { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),                                      { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+ && swayosd-client --brightness 5"),                  { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%- && swayosd-client --brightness 5"),                  { locked = true, repeating = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
@@ -415,6 +415,15 @@ hl.window_rule({
     match = { class = "^rofi$" },
     rounding  = 12,
     no_shadow = true,
+})
+
+hl.window_rule({
+    name  = "dropdown-term",
+    match = { class = "kitty-dropdown" },
+    float  = true,
+    pin    = true,
+    move   = "0 0",
+    size   = "100% 55%",
 })
 
 
