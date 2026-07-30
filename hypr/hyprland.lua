@@ -244,7 +244,7 @@ hl.config({
 
 hl.config({
     input = {
-        kb_layout  = "us",
+        kb_layout  = "us,kr",
         kb_variant = "",
         kb_model   = "",
         kb_options = "",
@@ -295,6 +295,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. "+ SHIFT + l", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.exec_cmd("$HOME/.config/hypr/switch_layout.sh"))
 hl.bind(mainMod .. "+ b", hl.dsp.exec_cmd("brave"))
 
 -- Move focus with mainMod + arrow keys

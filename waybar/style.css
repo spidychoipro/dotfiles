@@ -71,6 +71,7 @@ window#waybar {
 #pulseaudio,
 #network,
 #custom-bluetooth,
+#custom-kb_layout,
 #clock {
     background: @surface;
     border-radius: 10px;
@@ -134,6 +135,16 @@ window#waybar {
 
 #custom-bluetooth.connected {
     color: @cyan;
+}
+
+#custom-kb_layout {
+    color: @text-dim;
+    min-width: 28px;
+}
+
+#custom-kb_layout.kr {
+    color: @pink;
+    font-weight: bold;
 }
 
 #clock {
