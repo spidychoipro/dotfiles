@@ -77,7 +77,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XMODIFIERS", "@im=fcitx")
 hl.env("QT_IM_MODULE", "fcitx")
 hl.env("GDK_SCALE", "1")
-hl.env("GDK_DPI_SCALE", "0.8")
+hl.env("GDK_DPI_SCALE", "0.7")
 
 
 hl.config({
@@ -289,7 +289,7 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("bash -c 'command -v cliphist 2>&1 >/dev/null && cliphist list | rofi -dmenu -p \"Clipboard\" | cliphist decode | wl-copy || hyprctl notify 2 3000 \"rgb(ff5555)\" \"install cliphist: sudo pacman -S cliphist\"'"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("bash -c 'cliphist list 2>/dev/null | head -c 1 | grep -q . && cliphist list | rofi -dmenu -p Clipboard | cliphist decode | wl-copy || hyprctl notify 2 3000 \"rgb(ff5555)\" \"cliphist: empty (install: sudo pacman -S cliphist)\"'"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + grave", hl.dsp.exec_cmd("bash $HOME/.config/hypr/toggle_term.sh"))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
