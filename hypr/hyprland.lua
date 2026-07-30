@@ -292,7 +292,6 @@ hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("bash -c 'if ! command -v cliphist >/dev/null 2>&1; then hyprctl notify 2 3000 \"rgb(ff5555)\" \"install: sudo pacman -S cliphist\"; elif cliphist list 2>/dev/null | head -c 1 | grep -q .; then cliphist list | rofi -dmenu -p Clipboard | cliphist decode | wl-copy; else hyprctl notify 2 3000 \"rgb(6272a4)\" \"cliphist: empty (copy something first)\"; fi'"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + grave", hl.dsp.exec_cmd("bash $HOME/.config/hypr/toggle_term.sh"))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
