@@ -34,7 +34,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | **kitty** | 터미널 (없으면 `$TERMINAL`로 fallback) |
 | **waybar** | 상단 상태바 |
 | **rofi** | 앱 실행기 (`Super+Space`) |
-| **swaync** | 알림 센터 |
+| **swaync** | 🔔 알림 센터 (Dracula 스타일) |
 | **fcitx5** | 한글 입력 |
 | **hyprlock + hypridle** | 잠금화면 + 자동 절전 |
 | **hyprpaper** | 배경화면 |
@@ -149,8 +149,41 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 ## 🔔 알림 센터 (swaync)
 
-오른쪽 상단에서 알림이 표시됩니다.  
-Dracula 스타일의 미니멀한 알림창 (340px).
+알림이 오면 오른쪽 상단에 **340px 미니멀 Dracula 카드**가 뜹니다.  
+마우스를 오른쪽 상단 끝으로 밀면 알림 센터 패널이 열립니다.
+
+### 알림 센터 구성
+
+```
+┌──────────────────────────────┐
+│  Notifications      [Clear]  │  ← 제목 + 전체 삭제
+│──────────────────────────────│
+│  ● Silent                    │  ← 방해금지 토글
+│──────────────────────────────│
+│    Brave                   │  ← 앱별 그룹
+│  페이지가 로드되었습니다      │
+│  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  │
+│    kitty                   │
+│  명령 실행 완료               │
+│                              │
+│        ↑ 드래그 가능          │
+└──────────────────────────────┘
+```
+
+### 주요 기능
+
+| 기능 | 설명 |
+|---|---|
+| 알림 그룹화 | 같은 앱 알림은 자동으로 묶임 |
+| 방해금지 모드 | `Silent` 토글 버튼으로 알림 일시 차단 |
+| 전체 삭제 | `Clear` 버튼으로 모든 알림 한 번에 제거 |
+| 자동 사라짐 | 일반 6초 / 낮음 3초 후 자동 종료 |
+
+### 커스터마이징
+
+- 설정 파일: `~/.config/swaync/config.json`
+- 스타일: `~/.config/swaync/style.css` (Dracula 기본 적용)
+- 너비/높이, 위치, 색상, 투명도 모두 자유롭게 수정 가능
 
 ---
 
@@ -168,7 +201,9 @@ dotfiles/
 │   ├── hyprlauncher.conf   ← Hyprlauncher (참고용)
 │   ├── hyprtoolkit.conf    ← Hyprtoolkit Dracula 테마
 │   └── toggle_window_layout.sh ← 레이아웃 전환 스크립트
-├── swaync/                 ← 알림 센터
+├── swaync/                 ← 알림 센터 (Dracula 미니멀 340px)
+│   ├── config.json         ← 설정
+│   └── style.css           ← Dracula 스타일
 ├── kitty/                  ← 터미널 (Dracula)
 ├── rofi/                   ← 앱 실행기 (Dracula)
 ├── waybar/                 ← 상태바
