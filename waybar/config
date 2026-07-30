@@ -17,7 +17,6 @@
         "pulseaudio",
         "network",
         "custom/bluetooth",
-        "custom/kb_layout",
         "tray",
         "clock"
     ],
@@ -71,14 +70,6 @@
         "format-ethernet": "󰊗",
         "format-disconnected": "⚠",
         "tooltip-format": "{essid} ({signalStrength}%) {ifname}"
-    },
-    "custom/kb_layout": {
-        "exec": "$HOME/.config/waybar/kb_layout.sh 2>/dev/null",
-        "interval": 1,
-        "return-type": "json",
-        "format": "{}",
-        "on-click": "$HOME/.config/hypr/switch_layout.sh",
-        "signal": 3
     },
     "custom/bluetooth": {
         "exec": "$HOME/.config/waybar/bluetooth.py 2> /dev/null",
