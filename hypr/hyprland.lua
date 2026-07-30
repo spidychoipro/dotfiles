@@ -301,7 +301,7 @@ hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. "+ ALT + l", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + t", hl.dsp.exec_cmd("bash $HOME/.config/hypr/toggle_window_layout.sh"))
-hl.bind(mainMod .. "+ I", hl.dsp.exec_cmd("systemsettings"))
+hl.bind(mainMod .. "+ I", hl.dsp.exec_cmd("env QT_SCALE_FACTOR=0.8 systemsettings"))
 hl.bind(mainMod .. "+ b", hl.dsp.exec_cmd("brave"))
 
 -- Move focus with mainMod + arrow keys
