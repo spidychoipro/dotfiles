@@ -20,7 +20,7 @@ DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 # ─── System ──────────────────────────────────────────────
 header "System"
 echo "  Host:  $(uname -n)"
-echo "  OS:    $(. /etc/os-release 2>/dev/null && echo "$NAME $VERSION_ID" || echo "unknown")"
+echo "  OS:    $( ( . /etc/os-release 2>/dev/null; echo "${NAME:-unknown} ${VERSION_ID:-}"; ) | xargs)"
 echo "  Kernel: $(uname -r)"
 echo "  DE:    ${XDG_CURRENT_DESKTOP:-none}"
 echo "  Session: ${HYPRLAND_INSTANCE_SIGNATURE:-not in Hyprland}"
@@ -77,7 +77,7 @@ files=(
   swayosd/style.css
   kitty/kitty.conf
   kitty/current-theme.conf
-  waybar/config.jsonc
+  waybar/config
   waybar/style.css
   rofi/config.rasi
   starship.toml
@@ -129,6 +129,8 @@ procs=(Hyprland hyprlock hypridle waybar swaync swayosd-server fcitx5)
 for p in "${procs[@]}"; do
   if pgrep -x "$p" &>/dev/null; then
     pass "$p"
+  elif [ "$p" = "hyprlock" ]; then
+    info "$p (only runs when locked)"
   else
     warn "$p (not running)"
   fi
@@ -150,7 +152,7 @@ done
 
 for var in GDK_SCALE GDK_DPI_SCALE; do
   val="${!var:-}"
-  [ -n "$val" ] && info "$var=$val" || info "$var (unset)"
+  [ -n "$val" ] && info "$var=$val" || info "$var (unset — set in hyprland.lua, only active inside Hyprland)"
 done
 
 # ─── Dotfiles Git Status ─────────────────────────────────
