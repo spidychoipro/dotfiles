@@ -86,7 +86,6 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | `Super + Enter` | Master 레이아웃: 포커스된 창을 Master로 교체 |
 | `Super + F` | 전체화면 (토글) |
 | `Super + V` | **클립보드 히스토리** (cliphist → rofi로 검색/붙여넣기) |
-| `` Super + \` `` | **드롭다운 터미널** (위에서 내려오는 퀵 터미널, 같은 세션 유지) |
 | `Super + P` | Pseudo 타일링 전환 |
 
 ### 창 이동 (VIM 스타일)
@@ -117,6 +116,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + Space` | **Rofi** 앱 실행기 |
 | `Super + E` | 파일 관리자 |
+| `Super + I` | 시스템 설정 |
 | `Super + B` | Brave 브라우저 |
 | `Super + M` | 시스템 종료 메뉴 |
 | `Super + Alt + L` | **잠금화면** |
@@ -157,30 +157,6 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 ```
 설치: sudo pacman -S cliphist
-```
-
-## ⌨️ 드롭다운 터미널
-
-`` Super + \` `` (grave 키) 를 누르면 화면 상단에서 터미널이 내려옵니다.
-
-```
-┌─────────────────────────────────┐
-│ $ _                        ← │  ← 상단 55% 덮음
-│                                  │     같은 세션 유지
-│                                  │     cd/vim 다 안 날아감
-└─────────────────────────────────┘
-│  브라우저 / 코드               │  ← 원래 작업공간
-│                                 │     레이아웃 영향 없음
-└─────────────────────────────────┘
-```
-
-- 다시 `` Super + \` `` → 사라짐
-- 같은 키티 세션 유지 (vim 열어놓고 닫았다 열어도 vim 살아있음)
-- `cd` 절대 안 날아감
-
-```
-설치: sudo pacman -S kitty (기본 설치)
-스크립트: toggle_term.sh
 ```
 
 ## 🔔 알림 센터 (swaync)
@@ -237,7 +213,7 @@ dotfiles/
 │   ├── hyprlauncher.conf   ← Hyprlauncher (참고용)
 │   ├── hyprtoolkit.conf    ← Hyprtoolkit Dracula 테마
 │   ├── toggle_window_layout.sh ← 레이아웃 전환 스크립트
-│   └── toggle_term.sh          ← 드롭다운 터미널 스크립트
+│   └── diagnose.sh             ← ⚕️ 오프라인 시스템 진단 스크립트
 ├── swaync/                 ← 알림 센터 (Dracula 미니멀 340px)
 │   ├── config.json         ← 설정
 │   └── style.css           ← Dracula 스타일
@@ -302,9 +278,27 @@ chmod +x ~/dotfiles/install.sh
 
 ---
 
+##  Neovim 설정
+
+함께 쓰는 Neovim 설정입니다. 아래 순서대로 따라 하면 끝.
+
+```bash
+# 1. Neovim 저장소에서 리눅스 설정을 가져오기
+git clone https://github.com/spidychoipro/neovim-config.git ~/.config/nvim
+
+# 2. Treesitter CLI 설치 (문법 강조 + 코드 분석용)
+sudo pacman -S tree-sitter-cli
+
+# 3. Neovim 실행 → 자동 플러그인 설치
+nvim
+```
+
+> Treesitter CLI가 없으면 문법 하이라이팅이 안 되거나 속도가 느릴 수 있어요.
+
+---
+
 ## 📝 기타
 
-- Neovim 설정: [neovim-config](https://github.com/spidychoipro/neovim-config)
 - 라이선스: [MIT](LICENSE)
 
 ---

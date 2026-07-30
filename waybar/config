@@ -66,10 +66,11 @@
         "on-click": "pavucontrol"
     },
     "network": {
-        "format-wifi": "",
+        "format-wifi": " {essid}",
         "format-ethernet": "󰊗",
         "format-disconnected": "⚠",
-        "tooltip-format": "{essid} ({signalStrength}%) {ifname}"
+        "tooltip-format": "{essid} ({signalStrength}%) {ifname}",
+        "on-click": "$HOME/.config/waybar/network.sh"
     },
     "custom/bluetooth": {
         "exec": "$HOME/.config/waybar/bluetooth.py 2> /dev/null",
