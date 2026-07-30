@@ -43,11 +43,14 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}{capacity}%",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% 󰃨",
-        "format-plugged": "{capacity}% ",
-        "format-icons": ["", "", "", "", ""]
+        "format": "{icon} {capacity}%",
+        "format-discharging": "{icon} {capacity}%",
+        "format-charging": "{icon} {capacity}% 󰂄",
+        "format-full": "{icon} {capacity}%",
+        "format-plugged": "{icon} {capacity}% ",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{capacity}% | {timeToEmpty}",
+        "interval": 5
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
