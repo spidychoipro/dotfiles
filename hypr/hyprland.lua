@@ -77,6 +77,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- Fcitx5 환경변수 추가
 hl.env("XMODIFIERS", "@im=fcitx")
 hl.env("QT_IM_MODULE", "fcitx")
+hl.env("QT_QPA_PLATFORMTHEME", "kde")
 hl.env("GDK_SCALE", "1")
 hl.env("GDK_DPI_SCALE", "0.7")
 
