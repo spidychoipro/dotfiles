@@ -1,0 +1,125 @@
+* {
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK KR", sans-serif;
+  font-size: 12px;
+}
+
+.control-center {
+  background: rgba(30, 32, 44, 0.97);
+  border: 1px solid rgba(68, 71, 90, 0.5);
+  border-radius: 14px;
+  padding: 8px 6px;
+}
+
+.notification-row {
+  margin: 2px 6px;
+}
+
+.notification {
+  background: rgba(49, 50, 68, 0.85);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 2px 0;
+}
+
+.notification .notification-default-action {
+  padding: 0;
+  border-radius: 10px;
+}
+
+.notification .notification-default-action:hover {
+  background: rgba(68, 71, 90, 0.3);
+}
+
+.notification .notification-content {
+  padding: 0;
+}
+
+.notification .title {
+  color: #f8f8f2;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.notification .body {
+  color: #f8f8f2;
+  font-size: 12px;
+}
+
+.notification .summary {
+  color: #bd93f9;
+  font-size: 12px;
+}
+
+.widget-title {
+  color: #f8f8f2;
+  margin: 2px 8px 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(68, 71, 90, 0.4);
+}
+
+.widget-title button {
+  background: transparent;
+  border: 1px solid rgba(68, 71, 90, 0.5);
+  border-radius: 8px;
+  padding: 2px 10px;
+  color: rgba(248, 248, 242, 0.7);
+  font-size: 11px;
+}
+
+.widget-title button:hover {
+  background: rgba(68, 71, 90, 0.3);
+  color: #f8f8f2;
+}
+
+.widget-dnd {
+  color: #6272a4;
+  margin: 2px 8px 8px;
+  font-size: 12px;
+}
+
+.widget-dnd > switch {
+  background: rgba(68, 71, 90, 0.4);
+  border-radius: 10px;
+  min-width: 36px;
+  min-height: 18px;
+}
+
+.widget-dnd > switch:checked {
+  background: rgba(80, 250, 123, 0.4);
+}
+
+.notification-group-headers {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6272a4;
+  margin: 4px 6px;
+}
+
+.notification-group-collapse-button {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  color: #6272a4;
+}
+
+.notification-group-collapse-button:hover {
+  background: rgba(68, 71, 90, 0.3);
+  color: #f8f8f2;
+}
+
+.notification-group-close-all {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  color: #6272a4;
+}
+
+.notification-group-close-all:hover {
+  background: rgba(255, 85, 85, 0.15);
+  color: #ff5555;
+}
