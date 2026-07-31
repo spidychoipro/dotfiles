@@ -39,7 +39,7 @@ case "$CHOSEN" in
             exit 1
         fi
 
-        SELECTED=$(echo -e "$SCAN_RESULTS" | rofi -dmenu -p "WiFi" -i -theme-str 'window {width: 480px;} listview {lines: 15;}')
+        SELECTED=$(echo -e "$SCAN_RESULTS" | rofi -dmenu -p "WiFi" -i -mesg "Connected: ${CURRENT_CONN:-none}" -theme-str 'window {width: 480px;} listview {lines: 15;}')
         [[ -z "$SELECTED" ]] && exit 0
 
         SSID=$(echo "$SELECTED" | sed 's/.*%  //' | xargs)
