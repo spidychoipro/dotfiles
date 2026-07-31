@@ -39,13 +39,18 @@
         "tooltip": true
     },
     "battery": {
+        "interval": 1,
         "states": {
             "warning": 30,
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-charging": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-charging": "{icon} {capacity}% 충전",
+        "format-plugged": "{icon} {capacity}% 충전",
+        "format-discharging": "{icon} {capacity}%",
+        "format-full": "{icon} {capacity}% 충전완료",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{capacity}%"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
