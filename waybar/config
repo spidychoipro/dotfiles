@@ -40,7 +40,7 @@
     },
     "battery": {
         "adapter": "AC",
-        "interval": 0.5,
+        "interval": 1,
         "states": {
             "warning": 30,
             "critical": 15
