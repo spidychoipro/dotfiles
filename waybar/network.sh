@@ -57,15 +57,17 @@ case "$CHOSEN" in
             ROFI_BIN="/usr/bin/rofi"
             PASSWORD=$($ROFI_BIN -dmenu -password -p "Password" -mesg "Enter password for: $SSID" -theme-str 'entry { placeholder: "Enter password"; } window { width: 420px; border-color: #ff5555; }')
             [[ -z "$PASSWORD" ]] && exit 0
-            RESULT=$(nmcli device wifi connect "$SSID" password "$PASSWORD" 2>&1)
+            if nmcli --wait 25 device wifi connect "$SSID" password "$PASSWORD" 2>&1; then
+                notify-send "Connected" "$SSID"
+            else
+                notify-send -u critical "Connection failed" "$SSID"
+            fi
         else
-            RESULT=$(nmcli device wifi connect "$SSID" 2>&1)
-        fi
-
-        if echo "$RESULT" | grep -qi "error\|failed\|already"; then
-            notify-send -u critical "Connection failed" "$SSID: $RESULT"
-        else
-            notify-send "Connected" "$SSID"
+            if nmcli --wait 25 device wifi connect "$SSID" 2>&1; then
+                notify-send "Connected" "$SSID"
+            else
+                notify-send -u critical "Connection failed" "$SSID"
+            fi
         fi
         ;;
     "Open nmtui")
