@@ -1,6 +1,6 @@
 [server]
 style = "/home/hoco30/.config/swayosd/style.css"
-top_margin = 0.45
+top_margin = 0.85
 max_volume = 100
 min_brightness = 5
 show_percentage = true

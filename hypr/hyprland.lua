@@ -304,6 +304,7 @@ hl.bind(mainMod .. "+ ALT + l", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + t", hl.dsp.exec_cmd("bash $HOME/.config/hypr/toggle_window_layout.sh"))
 hl.bind(mainMod .. "+ I", hl.dsp.exec_cmd("env QT_SCALE_FACTOR=0.8 systemsettings"))
 hl.bind(mainMod .. "+ b", hl.dsp.exec_cmd("brave"))
+hl.bind(mainMod .. "+ SHIFT + M", hl.dsp.exec_cmd("spotify"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))

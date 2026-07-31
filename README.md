@@ -118,6 +118,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | `Super + E` | 파일 관리자 |
 | `Super + I` | 시스템 설정 |
 | `Super + B` | Brave 브라우저 |
+| `Super + Shift + M` | **Spotify** |
 | `Super + M` | 시스템 종료 메뉴 |
 | `Super + Alt + L` | **잠금화면** |
 | `Super + Print` | 현재 창 스크린샷 |
