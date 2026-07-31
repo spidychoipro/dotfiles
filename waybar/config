@@ -13,7 +13,7 @@
     "modules-right": [
         "idle_inhibitor",
         "cpu",
-        "battery",
+        "custom/battery",
         "pulseaudio",
         "network",
         "custom/bluetooth",
@@ -38,21 +38,12 @@
         "format": " {usage}%",
         "tooltip": true
     },
-    "battery": {
-        "adapter": "AC",
-        "interval": 1,
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon} {capacity}%",
-        "format-charging": "{icon} {capacity}% 충전",
-        "format-plugged": "{icon} {capacity}% 충전",
-        "format-not-charging": "{icon} {capacity}% 충전",
-        "format-discharging": "{icon} {capacity}%",
-        "format-full": "{icon} {capacity}% 충전완료",
-        "format-icons": ["", "", "", "", ""],
-        "tooltip-format": "{capacity}%"
+    "custom/battery": {
+        "exec": "$HOME/.config/waybar/battery.sh",
+        "return-type": "json",
+        "restart-interval": 5,
+        "persistent": true,
+        "format": "{}"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
