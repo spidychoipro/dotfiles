@@ -55,7 +55,7 @@ case "$CHOSEN" in
         PASSWORD=""
         if [[ -n "$SECURITY" ]]; then
             ROFI_BIN="/usr/bin/rofi"
-            PASSWORD=$($ROFI_BIN -dmenu -password -p "Password" -mesg "$SSID")
+            PASSWORD=$($ROFI_BIN -dmenu -password -p "Password" -mesg "Enter password for: $SSID")
             [[ -z "$PASSWORD" ]] && exit 0
             RESULT=$(nmcli device wifi connect "$SSID" password "$PASSWORD" 2>&1)
         else
