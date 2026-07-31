@@ -44,13 +44,8 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-discharging": "{icon} {capacity}%",
-        "format-charging": "{icon} {capacity}% 󰂄",
-        "format-full": "{icon} {capacity}%",
-        "format-plugged": "{icon} {capacity}% ",
-        "format-icons": ["", "", "", "", ""],
-        "tooltip-format": "{capacity}% | {timeToEmpty}",
-        "interval": 5
+        "format-charging": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""]
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",

@@ -42,7 +42,7 @@ case "$CHOSEN" in
         SELECTED=$(echo -e "$SCAN_RESULTS" | rofi -dmenu -p "WiFi" -i -theme-str 'window {width: 480px;} listview {lines: 15;}')
         [[ -z "$SELECTED" ]] && exit 0
 
-        SSID=$(echo "$SELECTED" | sed 's/^.*[0-9]\{3\}%  //' | xargs)
+        SSID=$(echo "$SELECTED" | sed 's/.*%  //' | xargs)
         [[ -z "$SSID" ]] && exit 0
 
         if nmcli -t -f NAME con show --active 2>/dev/null | grep -Fxq "$SSID"; then
@@ -52,8 +52,10 @@ case "$CHOSEN" in
 
         SECURITY=$(nmcli -t -f SSID,SECURITY device wifi list 2>/dev/null | grep -F "$SSID" | head -1 | cut -d: -f2)
 
-        if [[ -n "$SECURITY" && "$SECURITY" != "" ]]; then
-            rofi -dmenu -password -p "Password" -mesg "$SSID")
+        PASSWORD=""
+        if [[ -n "$SECURITY" ]]; then
+            ROFI_BIN="/usr/bin/rofi"
+            PASSWORD=$($ROFI_BIN -dmenu -password -p "Password" -mesg "$SSID")
             [[ -z "$PASSWORD" ]] && exit 0
             RESULT=$(nmcli device wifi connect "$SSID" password "$PASSWORD" 2>&1)
         else
