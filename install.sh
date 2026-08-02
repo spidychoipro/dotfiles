@@ -6,7 +6,7 @@ CONFIG="$HOME/.config"
 
 echo "dotfiles 설치 시작..."
 
-mkdir -p "$CONFIG/hypr" "$CONFIG/swaync" "$CONFIG/fcitx5" "$CONFIG/kitty" "$CONFIG/rofi" "$CONFIG/waybar" "$CONFIG/backgrounds"
+mkdir -p "$CONFIG/hypr" "$CONFIG/swaync" "$CONFIG/fcitx5" "$CONFIG/kitty" "$CONFIG/rofi" "$CONFIG/waybar" "$CONFIG/backgrounds" "$CONFIG/fastfetch"
 
 ln -sf "$DOTFILES/hypr/hyprland.lua"       "$CONFIG/hypr/hyprland.lua"
 ln -sf "$DOTFILES/hypr/hypridle.conf"       "$CONFIG/hypr/hypridle.conf"
@@ -24,6 +24,7 @@ ln -sf "$DOTFILES/kitty/kitty.conf"         "$CONFIG/kitty/kitty.conf"
 ln -sf "$DOTFILES/kitty/current-theme.conf" "$CONFIG/kitty/current-theme.conf"
 ln -sf "$DOTFILES/waybar"/*                 "$CONFIG/waybar/"
 ln -sf "$DOTFILES/rofi/config.rasi"         "$CONFIG/rofi/config.rasi"
+ln -sf "$DOTFILES/fastfetch"/*              "$CONFIG/fastfetch/"
 ln -sf "$DOTFILES/zsh/zshrc"               "$HOME/.zshrc"
 ln -sf "$DOTFILES/starship/starship.toml"   "$CONFIG/starship.toml" 2>/dev/null || true
 ln -sf "$DOTFILES/brave/brave-flags.conf"   "$CONFIG/brave-flags.conf" 2>/dev/null || true
