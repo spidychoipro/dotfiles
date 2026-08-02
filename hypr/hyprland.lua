@@ -55,7 +55,7 @@ local menu        = "rofi -show drun"
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 hl.on("hyprland.start", function()
 	hl.exec_cmd("command -v swayosd-server 2>&1 >/dev/null && swayosd-server --config $HOME/.config/swayosd/config.toml &")
-	hl.exec_cmd("waybar & swaync & hypridle")
+	hl.exec_cmd("hyprpaper & waybar & swaync & hypridle")
 	hl.exec_cmd("command -v cliphist && wl-paste --watch cliphist store &")
 	hl.exec_cmd("fcitx5 -d")
 	hl.exec_cmd("bash -c 'sed -i \"s/\\\"exit_type\\\":\\\"Crashed\\\"/\\\"exit_type\\\":\\\"Normal\\\"/\" ~/.config/BraveSoftware/Brave-Browser/Default/Preferences; sed -i \"s/\\\"exited_cleanly\\\":false/\\\"exited_cleanly\\\":true/\" ~/.config/BraveSoftware/Brave-Browser/Default/Preferences'")
