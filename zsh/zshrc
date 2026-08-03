@@ -35,6 +35,11 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# fzf: 정확 부분일치(exact)로 검색 — "cube" 검색 시 cube가 그대로 포함된 것만
+# ctrl+t: 파일 검색 / ctrl+r: 이전 명령 검색 / alt+c: 디렉터리 이동 / **<TAB>: 경로 완성
+export FZF_DEFAULT_OPTS='--exact --height 40% --layout=reverse --border'
+source <(fzf --zsh)
+
 # rm 실행 시 항상 삭제 여부 확인 (-i: interactive)
 alias rm='rm -i'
 
