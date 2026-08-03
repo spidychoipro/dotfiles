@@ -12,3 +12,7 @@ fcitx5/conf/cached_layouts
 
 # 편집기/러너
 *.log
+
+# 시스템 테마(Dracula 패키지) 제공 파일 — 심링크이므로 저장소 제외
+gtk-4.0/gtk.css
+gtk-4.0/gtk-dark.css
