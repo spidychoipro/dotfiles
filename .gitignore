@@ -1,0 +1,14 @@
+# 저작권 있는 이미지 — GitHub 업로드 제외 (로컬에만 유지)
+fastfetch/mumei.png
+fastfetch/*.png
+
+# fcitx5 런타임 캐시 (자동 갱신)
+fcitx5/conf/cached_layouts
+
+# 백업/임시
+*.bak
+*/kitty_bak_*
+.DS_Store
+
+# 편집기/러너
+*.log

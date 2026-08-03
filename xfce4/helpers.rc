@@ -1,0 +1,3 @@
+TerminalEmulator=kitty
+TerminalEmulatorBasic=kitty
+TerminalEmulatorAdvanced=kitty --hold -e

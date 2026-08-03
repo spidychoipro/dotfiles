@@ -6,7 +6,7 @@ CONFIG="$HOME/.config"
 
 echo "dotfiles 설치 시작..."
 
-mkdir -p "$CONFIG/hypr" "$CONFIG/swaync" "$CONFIG/fcitx5" "$CONFIG/kitty" "$CONFIG/rofi" "$CONFIG/waybar" "$CONFIG/backgrounds" "$CONFIG/fastfetch"
+mkdir -p "$CONFIG/hypr" "$CONFIG/swaync" "$CONFIG/fcitx5" "$CONFIG/kitty" "$CONFIG/rofi" "$CONFIG/waybar" "$CONFIG/backgrounds" "$CONFIG/fastfetch" "$CONFIG/xsettingsd" "$CONFIG/yad"
 
 ln -sf "$DOTFILES/hypr/hyprland.lua"       "$CONFIG/hypr/hyprland.lua"
 ln -sf "$DOTFILES/hypr/hypridle.conf"       "$CONFIG/hypr/hypridle.conf"
@@ -28,6 +28,13 @@ ln -sf "$DOTFILES/fastfetch"/*              "$CONFIG/fastfetch/"
 ln -sf "$DOTFILES/zsh/zshrc"               "$HOME/.zshrc"
 ln -sf "$DOTFILES/starship/starship.toml"   "$CONFIG/starship.toml" 2>/dev/null || true
 ln -sf "$DOTFILES/brave/brave-flags.conf"   "$CONFIG/brave-flags.conf" 2>/dev/null || true
+ln -sf "$DOTFILES/gtkrc"                    "$CONFIG/gtkrc"
+ln -sf "$DOTFILES/gtkrc-2.0"                "$CONFIG/gtkrc-2.0"
+ln -sf "$DOTFILES/Trolltech.conf"           "$CONFIG/Trolltech.conf"
+ln -sf "$DOTFILES/EOS-greeter.conf"         "$CONFIG/EOS-greeter.conf"
+ln -sf "$DOTFILES/mimeapps.list"            "$CONFIG/mimeapps.list"
+ln -sf "$DOTFILES/xsettingsd/xsettingsd.conf" "$CONFIG/xsettingsd/xsettingsd.conf"
+ln -sf "$DOTFILES/yad/settings.conf"        "$CONFIG/yad/settings.conf"
 
 [ "$SHELL" != "/usr/bin/zsh" ] && chsh -s /usr/bin/zsh && echo "shell changed to zsh, re-login required"
 
