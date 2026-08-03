@@ -15,7 +15,22 @@ else
 fi
 
 echo "== 2/4. initramfs 재생성 (plymouth 제외) =="
-sudo dracut --regenerate-all
+# 부팅이 읽는 실제 initramfs(/efi)를 재생성해야 반영됨
+ENTRIES=/efi/loader/entries
+done_count=0
+for f in "$ENTRIES"/*.conf; do
+    sudo [ -e "$f" ] || continue
+    base=$(basename "$f" .conf)
+    [[ "$base" == *-fallback ]] && continue
+    initrd=$(sudo awk -v k="initrd" '$0 ~ "^"k"[ \t]=" || $0 ~ "^"k"[ \t]" { sub("^"k"[ \t]*=?[ \t]*",""); print; exit }' "$f")
+    [[ "$initrd" == *initramfs* ]] || continue
+    sudo dracut -f --kver "$(uname -r)" "/efi$initrd"
+    echo "  재생성 완료: /efi$initrd"
+    done_count=$((done_count + 1))
+done
+if [ "$done_count" -eq 0 ]; then
+    echo "  [!!] 재생성할 initramfs를 찾지 못했습니다 — 수동 점검 필요"
+fi
 
 echo "== 3/4. 패키지 제거 =="
 sudo pacman -Rns plymouth plymouth-themes || echo "  (이미 제거됨)"
