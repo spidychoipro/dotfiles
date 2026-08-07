@@ -1,0 +1,55 @@
+set font "JetBrainsMono Nerd Font 12"
+set selection-clipboard clipboard
+set scroll-step 50
+set adjust-open 100
+set zoom-min 20
+set zoom-max 1000
+
+set recolor true
+set recolor-lightcolor "#282a36"
+set recolor-darkcolor "#f8f8f2"
+
+set default-bg              "#282a36"
+set default-fg              "#f8f8f2"
+set statusbar-bg            "#282a36"
+set statusbar-fg            "#bd93f9"
+set inputbar-bg             "#282a36"
+set inputbar-fg             "#f8f8f2"
+set notification-bg         "#282a36"
+set notification-fg         "#f8f8f2"
+set notification-error-bg   "#282a36"
+set notification-error-fg   "#ff5555"
+set notification-warning-bg "#282a36"
+set notification-warning-fg "#ffb86c"
+set index-bg                "#282a36"
+set index-fg                "#f8f8f2"
+set index-active-bg         "#44475a"
+set index-active-fg         "#50fa7b"
+set render-loading-bg       "#282a36"
+set render-loading-fg       "#50fa7b"
+set highlight-color         "#ff79c6"
+set highlight-active-color  "#50fa7b"
+set completion-bg           "#282a36"
+set completion-fg           "#f8f8f2"
+set completion-group-bg     "#282a36"
+set completion-group-fg     "#bd93f9"
+set completion-highlight-bg "#44475a"
+set completion-highlight-fg "#ff79c6"
+
+map j scroll half-down
+map k scroll half-up
+map d scroll down
+map u scroll up
+map <C-d> scroll down
+map <C-u> scroll up
+map gg goto first
+map G goto last
+map n search next
+map N search previous
+map f toggle_fullscreen
+map t toggle_index
+map + zoom in
+map - zoom out
+map R recolor
+map w zoom to-width
+map W zoom best-fit
