@@ -40,6 +40,22 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 export FZF_DEFAULT_OPTS='--exact --height 40% --layout=reverse --border'
 source <(fzf --zsh)
 
+# fzf 미리보기: 파일 내용(bat), 디렉터리 트리(eza)로 표시
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range=:100 {} 2>/dev/null || eza --tree --level=2 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 {} 2>/dev/null'"
+
+# eza: ls 대체 (ls 입력 시 색상+아이콘 출력, tree로 디렉터리 구조)
+alias ls='eza --icons --group-directories-first'
+alias la='eza --icons --all --group-directories-first'
+alias lt='eza --icons --tree --level=2 --group-directories-first'
+alias ll='eza --icons --long --git --group-directories-first'
+
+# bat: cat 대체 (구문 하이라이트)
+alias cat='bat --paging=never'
+
+# zoxide: 똑똑한 cd — "z 폴더이름"으로 자주 가는 곳에 즉시 이동
+eval "$(zoxide init zsh)"
+
 # rm 실행 시 항상 삭제 여부 확인 (-i: interactive)
 alias rm='rm -i'
 
