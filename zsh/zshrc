@@ -50,9 +50,6 @@ alias la='eza --icons --all --group-directories-first'
 alias lt='eza --icons --tree --level=2 --group-directories-first'
 alias ll='eza --icons --long --git --group-directories-first'
 
-# bat: cat 대체 (구문 하이라이트)
-alias cat='bat --paging=never'
-
 # zoxide: 똑똑한 cd — "z 폴더이름"으로 자주 가는 곳에 즉시 이동
 eval "$(zoxide init zsh)"
 
