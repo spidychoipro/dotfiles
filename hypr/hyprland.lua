@@ -36,7 +36,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local fileManager = "env GDK_SCALE=0.8 GDK_DPI_SCALE=0.8 thunar"
+local fileManager = "thunar"
 local menu        = "rofi -show drun"
 
 
@@ -121,8 +121,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = { colors = {"rgba(ff79c6ee)", "rgba(bd93f9ee)"}, angle = 45 },
+            inactive_border = "rgba(44475aaa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -146,14 +146,14 @@ hl.config({
             enabled      = true,
             range        = 4,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color        = 0xee282a36,
         },
 
         blur = {
             enabled   = true,
             size      = 3,
             passes    = 1,
-            vibrancy  = 0.1696,
+            vibrancy  = 0.25,
         },
     },
 
@@ -173,23 +173,23 @@ hl.curve("gentle",         { type = "bezier", points = { {0.25, 0.1},  {0.25, 1}
 
 hl.curve("easy",           { type = "spring", mass = 1, stiffness = 71.2633, dampening = 15.8273644 })
 
-hl.animation({ leaf = "global",        enabled = true,  speed = 8,    bezier = "default" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 5,    bezier = "smooth" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 3,    spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 2.5,  spring = "easy",         style = "popin 85%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2,    bezier = "smooth" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.5,  bezier = "gentle" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.2,  bezier = "gentle" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 2.5,  bezier = "gentle" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3,    bezier = "gentle" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 3.5,  bezier = "gentle",       style = "fade" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "gentle",       style = "fade" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.5,  bezier = "gentle" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.2,  bezier = "gentle" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 0.8,  bezier = "smooth",       style = "slidevert" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 0.8,  bezier = "smooth",       style = "slidevert" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 0.8,  bezier = "smooth",       style = "slidevert" })
-hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 6,    bezier = "gentle" })
+hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
+hl.animation({ leaf = "border",        enabled = true,  speed = 8,    bezier = "smooth" })
+hl.animation({ leaf = "windows",       enabled = true,  speed = 6,    spring = "easy" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 5,    spring = "easy",         style = "popin 85%" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 5,    bezier = "smooth" })
+hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 3,    bezier = "gentle" })
+hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 3,    bezier = "gentle" })
+hl.animation({ leaf = "fade",          enabled = true,  speed = 5,    bezier = "gentle" })
+hl.animation({ leaf = "layers",        enabled = true,  speed = 5,    bezier = "gentle" })
+hl.animation({ leaf = "layersIn",      enabled = true,  speed = 6,    bezier = "gentle",       style = "fade" })
+hl.animation({ leaf = "layersOut",     enabled = true,  speed = 4,    bezier = "gentle",       style = "fade" })
+hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 4,    bezier = "gentle" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 3,    bezier = "gentle" })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 2.5,  bezier = "smooth",       style = "slidevert" })
+hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 2.5,  bezier = "smooth",       style = "slidevert" })
+hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 2.5,  bezier = "smooth",       style = "slidevert" })
+hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 8,    bezier = "gentle" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
@@ -271,14 +271,6 @@ hl.gesture({
     action = "workspace"
 })
 
--- Example per-device config
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
-hl.device({
-    name        = "epic-mouse-v1",
-    sensitivity = -0.5,
-})
-
-
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
@@ -305,6 +297,7 @@ hl.bind(mainMod .. " + SHIFT + t", hl.dsp.exec_cmd("bash $HOME/.config/hypr/togg
 hl.bind(mainMod .. "+ I", hl.dsp.exec_cmd("env QT_SCALE_FACTOR=0.8 systemsettings"))
 hl.bind(mainMod .. "+ b", hl.dsp.exec_cmd("brave"))
 hl.bind(mainMod .. "+ SHIFT + M", hl.dsp.exec_cmd("spotify"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("bash $HOME/.config/hypr/pdf-open.sh"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))
@@ -325,10 +318,6 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
     hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
 end
-
--- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
---hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
@@ -400,15 +389,6 @@ hl.layer_rule({
     blur  = true,
 })
 
--- Hyprland-run windowrule
-hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
-
-    move  = "20 monitor_h-120",
-    float = true,
-})
-
 hl.window_rule({
     name  = "fcitx-pseudo",
     match = { class = "^fcitx$" },
@@ -420,15 +400,6 @@ hl.window_rule({
     match = { class = "^rofi$" },
     rounding  = 12,
     no_shadow = true,
-})
-
-hl.window_rule({
-    name  = "dropdown-term",
-    match = { class = "kitty-dropdown" },
-    float  = true,
-    pin    = true,
-    move   = "0 0",
-    size   = "100% 55%",
 })
 
 

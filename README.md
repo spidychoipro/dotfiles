@@ -83,7 +83,6 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + Q` | 터미널 열기 |
 | `Super + C` | 창 닫기 |
-| `Super + Enter` | Master 레이아웃: 포커스된 창을 Master로 교체 |
 | `Super + F` | 전체화면 (토글) |
 | `Super + V` | **클립보드 히스토리** (cliphist → rofi로 검색/붙여넣기) |
 | `Super + P` | Pseudo 타일링 전환 |
@@ -108,7 +107,6 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + 1~0` | 작업공간 1~10 이동 |
 | `Super + Shift + 1~0` | 창을 작업공간 1~10으로 이동 |
-| `Super + S` | 특수 작업공간 (스크래치패드) 토글 |
 
 ### 실행 / 시스템
 
@@ -116,6 +114,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + Space` | **Rofi** 앱 실행기 |
 | `Super + E` | 파일 관리자 |
+| `Super + D` | PDF 뷰어 (zathura, rofi로 파일 선택) |
 | `Super + I` | 시스템 설정 |
 | `Super + B` | Brave 브라우저 |
 | `Super + Shift + M` | **Spotify** |

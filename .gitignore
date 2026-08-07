@@ -2,6 +2,9 @@
 fastfetch/mumei.png
 fastfetch/*.png
 
+# 애니 배경화면 (저작권, GitHub 업로드 제외)
+backgrounds/anime-*
+
 # fcitx5 런타임 캐시 (자동 갱신)
 fcitx5/conf/cached_layouts
 
