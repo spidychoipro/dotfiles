@@ -70,6 +70,7 @@ files=(
   hypr/hyprlauncher.conf
   hypr/hyprtoolkit.conf
   hypr/toggle_window_layout.sh
+  hypr/cycle_wallpaper.sh
   swaync/config.json
   swaync/style.css
   swayosd/config.toml
@@ -110,7 +111,7 @@ fi
 # ─── Script Permissions ──────────────────────────────────
 header "Script Permissions"
 
-for script in toggle_window_layout.sh diagnose.sh; do
+for script in toggle_window_layout.sh cycle_wallpaper.sh diagnose.sh; do
   f="$HYPR/$script"
   if [ -f "$f" ]; then
     [ -x "$f" ] && pass "$script (+x)" || warn "$script (missing +x)"

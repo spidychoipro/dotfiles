@@ -117,6 +117,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | `Super + D` | PDF 뷰어 (zathura, rofi로 파일 선택) |
 | `Super + I` | 시스템 설정 |
 | `Super + B` | Brave 브라우저 |
+| `Super + W` | 배경화면 순환 (anime-* 폴더) |
 | `Super + Shift + M` | **Spotify** |
 | `Super + M` | 시스템 종료 메뉴 |
 | `Super + Alt + L` | **잠금화면** |

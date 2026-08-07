@@ -175,13 +175,25 @@ README.md:86은 존재하지 않는 "Super+Enter = Master 전환" 바인딩을 �
   - (선택) l.204-229 구조 섹션의 `hypr/` 목록에서 `toggle_term.sh` 제거
 - **성공검증** README 바인딩 표 전체와 `hyprctl binds` 대조 — 허위 기재 없음; `grep -n "Master 레이아웃: 포커스된 창\|toggle_term\|스크래치패드" README.md` → 결과 없음
 
+### 작업 11: 배경 순환 단축키 (사용자 요청 — YouTube 스타일 "딸깍" 배경 전환) — `hypr/cycle_wallpaper.sh` + 바인드
+- **변경내용**
+  - `hypr/cycle_wallpaper.sh` 신규 (실행권한 +x): `backgrounds/anime-*` 파일들을 sort 기준 순환
+    - `hyprctl hyprpaper wallpaper "eDP-1,<경로>"` 로 즉시 적용
+    - hyprpaper.conf(home 경로)와 hyprlock.conf(`~` 경로)의 path 라인을 sed로 동기화 → 재부팅/다음 잠금에도 동일 배경 유지
+    - 상태: `~/.cache/hypr-wallpaper-idx`, 알림: `hyprctl notify` (Dracula 퍼플 bd93f9)
+  - hyprland.lua: `hl.bind(mainMod .. " + W", ...cycle_wallpaper.sh)` 추가
+  - install.sh 심링크 + diagnose.sh files/perms 목록에 추가, README에 `Super + W` 행 추가
+  - 배경 후보: wallhaven toplist에서 4K/다크 톤 선별 + 하단 OCR로 워터마크 검사 통과분 5개 추가
+    (`anime-wallhaven-lyjvl2/og6wom/po75pp/vpddj5/lyjvdq` — `.gitignore`로 GitHub 제외)
+- **성공검증** `hyprctl binds | grep W` → 존재; 2회 실행 후 `hyprctl hyprpaper listactive`가 다른 파일로 변경; hyprpaper/hyprlock.conf path 동일
+
 ---
 
 ## Negative Space (NSP)
 
 ### What NOT to do
 - **다른 앱 설정 건드리지 않음** — waybar/rofi/kitty/swaync/swayosd/hyprtoolkit/hypridle 등은 이번 작업 범위 밖 (변경 대상: `dotfiles/hypr/*`, `README.md`, `backgrounds/`, `.gitignore`, `docs/` 만)
-- **레이아웃(dwindle), 키바인딩 스킴, 단축키 체계 변경 금지** — 새 바인딩 추가 없음 (이번 작업은 전부 제거/수정만)
+- **레이아웃(dwindle), 키바인딩 스킴, 단축키 체계 변경 금지** — 추가 바인딩은 사용자 요청의 `Super + W`(배경 순환) 1건만
 - **초심자 편의 알리아스 추가 / 코어 커맨드 오버라이드 금지** (기존 AGENTS.md 규칙 유지)
 - **fcitx5 한글 IME env 훼손 금지** — `XMODIFIERS`/`QT_IM_MODULE`/`QT_QPA_PLATFORMTHEME`(l.78-80)은 그대로
 - **모니터/스케일 설정 변경 금지** — monitor `scale = 1.25`(l.29) 유지
