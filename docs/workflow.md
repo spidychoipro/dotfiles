@@ -149,6 +149,19 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 - 관측 후 세 창은 닫아 작업공간을 원상 복구함.
 - 위 판정(Thunar/Zathura→GENERAL(3), Pavucontrol→floating)은 확정된 배치 기준이며, **window rule 코드는 아직 작성하지 않음** — 설계 확정 후 작성.
 
+### ✅ 2026-08-10 장기 결정 — 자동 배치 위치 강제 제거 (실사용 파악 결과)
+
+**배경**: 자동 배치 규칙(Brave→2, Spotify→4, Thunar→3, Zathura→3)을 적용했으나, 실사용 질문 파악 결과 사용자 흐름과 정면 충돌(앱이 "지금 있는 ws"에 열리길 원함)이 확인됨.
+
+**결정**: **위치 강제 규칙 4개를 모두 제거**한다.
+- 앱은 열린 위치(현재 ws)에 유지된다.
+- ws 모델(1=DEV 2=WEB 3=GENERAL 4=MEDIA)은 **라벨로 유지** — 조직화는 `Super+Shift+N`(창 이동)이 담당.
+- **Pavucontrol floating만 유지** — 위치 이동이 아닌 "현재 ws에서 떠 있는 창" 처리라 흐름과 무관.
+- kitty는 계속 자동 배치 제외.
+- 규칙 재도입 기준: ws당 창 4~5개로 늘거나, ws별 분리 사용 습관이 생겼을 때(데이터로 확인 후).
+
+**장기 근거**: 단일 모니터·4ws·창 1~2개 환경에서 고정 배치의 이점(위치 예측)은 미미하고, 실행 시 컨텍스트 스위치 비용이 매일 발생 → 제거가 장기적으로 유리. 이 결정은 영구적이지 않으며 조건 충족 시 재도입.
+
 ### 관측/근거 현황 (결정 이력)
 
 | 앱 | class (관측?) | 배치 후보 | 근거 |
@@ -237,8 +250,8 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 | 2 | 미디어(Spotify) workspace 정의 — MEDIA(ws4) Spotify 전용, tiled 유지, 영상 등은 관측 후 추가 | ✅ 결정됨 (A안) |
 | 3 | Scratchpad 재도입 — ✅ 결정 (D안): 특수 workspace 방식, 역할 한정, 검증 규칙, 키=Super+grave | ✅ 결정됨 |
 | 4 | Scratchpad 키 | ✅ 결정됨 (Super+grave) |
-| 5 | 자동 배치 대상 — Brave→WEB(2)·Spotify→MEDIA(4) 확정, kitty·Rofi 제외, 미관측 4종 대기 | ✅ 결정됨 |
-| 6 | 미관측 앱 class 확인 — ✅ 관측 완료: Thunar=`thunar`→GENERAL, Zathura=`org.pwmt.zathura`→GENERAL, Pavucontrol=`org.pulseaudio.pavucontrol`→floating. Obsidian 제외. 규칙 코드는 미작성 | ✅ 결정됨 (관측 완료) |
+| 5 | 자동 배치 대상 — Brave→WEB(2)·Spotify→MEDIA(4) 확정, kitty·Rofi 제외, 미관측 4종 대기 | ✅ 결정됨 → **위치 강제 미적용**(2026-08-10 장기 결정) |
+| 6 | 미관측 앱 class 확인 — ✅ 관측 완료: Thunar=`thunar`→GENERAL, Zathura=`org.pwmt.zathura`→GENERAL, Pavucontrol=`org.pulseaudio.pavucontrol`→floating. Obsidian 제외. 규칙 코드는 미작성 | ✅ 결정됨 → **Pavucontrol floating만 적용**(위치 강제 없음) |
 | 7 | appearance(애니메이션/배경) 조정 여부 — ✅ 결정: ① ws 전환 애니메이션 **속도 상향**(애니 유지, 응답성 개선) ② blur/성능 **조건부**(성능 문제 관측 시에만 축소) ③ 미사용 animation leaf **축소**(핵심 유지). 유지: Dracula·배경 순환·focus border·opacity 1.0 | ✅ 결정됨 |
 | 8 | cycle_wallpaper.sh tracked 파일 오염 해결 — ✅ 결정: **심링크 방식**. hyprpaper.conf·hyprlock.conf의 path를 고정 심링크(예: `~/.config/hypr/current-wallpaper`)로 지정, 순환 시 심링크만 재지정 → tracked 파일 수정 없음. | ✅ 결정됨 |
 | 9 | hyprlock.conf "Status word" label 블록 — ✅ 결정: **제거 유지 + 커밋** (commit `d8b485c`). wallpaper path는 HEAD로 원복해 커밋 오염 제외 | ✅ 결정됨 (커밋 d8b485c) |

@@ -355,30 +355,6 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "auto-batch-brave",
-    match = { class = "^brave" },
-    workspace = "2",
-})
-
-hl.window_rule({
-    name  = "auto-batch-spotify",
-    match = { class = "^Spotify$" },
-    workspace = "4",
-})
-
-hl.window_rule({
-    name  = "auto-batch-thunar",
-    match = { class = "^thunar$" },
-    workspace = "3",
-})
-
-hl.window_rule({
-    name  = "auto-batch-zathura",
-    match = { class = "^org.pwmt.zathura$" },
-    workspace = "3",
-})
-
-hl.window_rule({
     name  = "pavucontrol-float",
     match = { class = "^org.pulseaudio.pavucontrol$" },
     float  = true,
