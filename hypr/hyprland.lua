@@ -62,8 +62,6 @@ hl.on("hyprland.start", function()
 	-- blueman-applet 설치 후 주석 해제: hl.exec_cmd("bash -c 'pgrep blueman-applet || blueman-applet &'")
 end)
 
--- end)
-
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -87,25 +85,6 @@ hl.config({
         force_zero_scaling = true,
     },
 })
-
-
------------------------
------ PERMISSIONS -----
------------------------
-
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Permissions/
--- Please note permission changes here require a Hyprland restart and are not applied on-the-fly
--- for security reasons
-
--- hl.config({
---   ecosystem = {
---     enforce_permissions = true,
---   },
--- })
-
--- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
--- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
--- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 
 
 -----------------------
@@ -184,30 +163,15 @@ hl.animation({ leaf = "fade",          enabled = true,  speed = 5,    bezier = "
 hl.animation({ leaf = "layers",        enabled = true,  speed = 5,    bezier = "gentle" })
 hl.animation({ leaf = "layersIn",      enabled = true,  speed = 6,    bezier = "gentle",       style = "fade" })
 hl.animation({ leaf = "layersOut",     enabled = true,  speed = 4,    bezier = "gentle",       style = "fade" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 4,    bezier = "gentle" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 3,    bezier = "gentle" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 2.5,  bezier = "smooth",       style = "slidevert" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 2.5,  bezier = "smooth",       style = "slidevert" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 2.5,  bezier = "smooth",       style = "slidevert" })
+hl.animation({ leaf = "fadeLayersIn",  enabled = false })
+hl.animation({ leaf = "fadeLayersOut", enabled = false })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 6,    bezier = "smooth",       style = "slidevert" })
+hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 6,    bezier = "smooth",       style = "slidevert" })
+hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 6,    bezier = "smooth",       style = "slidevert" })
 hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 8,    bezier = "gentle" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
--- uncomment all if you wish to use that.
--- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
--- hl.workspace_rule({ workspace = "f[1]",   gaps_out = 0, gaps_in = 0 })
--- hl.window_rule({
---     name  = "no-gaps-wtv1",
---     match = { float = false, workspace = "w[tv1]" },
---     border_size = 0,
---     rounding    = 0,
--- })
--- hl.window_rule({
---     name  = "no-gaps-f1",
---     match = { float = false, workspace = "f[1]" },
---     border_size = 0,
---     rounding    = 0,
--- })
 
 -- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
 hl.config({
@@ -220,13 +184,6 @@ hl.config({
 hl.config({
     master = {
         new_status = "master",
-    },
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
-hl.config({
-    scrolling = {
-        fullscreen_on_one_column = true,
     },
 })
 
@@ -288,7 +245,6 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("bash -c 'if ! command -v cliphist >/
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
--- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
 
 hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
@@ -392,16 +348,40 @@ hl.layer_rule({
 })
 
 hl.window_rule({
-    name  = "fcitx-pseudo",
-    match = { class = "^fcitx$" },
-    pseudo = true,
-})
-
-hl.window_rule({
     name  = "rofi-dracula",
     match = { class = "^rofi$" },
     rounding  = 12,
     no_shadow = true,
+})
+
+hl.window_rule({
+    name  = "auto-batch-brave",
+    match = { class = "^brave" },
+    workspace = "2",
+})
+
+hl.window_rule({
+    name  = "auto-batch-spotify",
+    match = { class = "^Spotify$" },
+    workspace = "4",
+})
+
+hl.window_rule({
+    name  = "auto-batch-thunar",
+    match = { class = "^thunar$" },
+    workspace = "3",
+})
+
+hl.window_rule({
+    name  = "auto-batch-zathura",
+    match = { class = "^org.pwmt.zathura$" },
+    workspace = "3",
+})
+
+hl.window_rule({
+    name  = "pavucontrol-float",
+    match = { class = "^org.pulseaudio.pavucontrol$" },
+    float  = true,
 })
 
 

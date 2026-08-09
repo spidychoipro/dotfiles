@@ -13,6 +13,9 @@ fcitx5/conf/cached_layouts
 */kitty_bak_*
 .DS_Store
 
+# 배경 순환 런타임 심링크 (cycle_wallpaper.sh가 재지정)
+hypr/current-wallpaper
+
 # 편집기/러너
 *.log
 
