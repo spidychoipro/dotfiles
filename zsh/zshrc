@@ -21,11 +21,13 @@ zstyle ':completion:*' menu select=0
 autoload -Uz compinit
 compinit -i
 
-setopt AUTO_MENU
-setopt CORRECT
-setopt CORRECT_ALL
+# 새로 설치한 프로그램도 rehash 없이 바로 인식하도록 설정
+zstyle ':completion:*' rehash true
+setopt NO_HASH_CMDS
 
-CORRECT_IGNORE="opencode"
+# 귀찮은 오타 교정 기능(zsh: correct '...' to '...') 비활성화
+unsetopt CORRECT
+unsetopt CORRECT_ALL
 
 alias ls='ls --color=auto'
 alias clear='clear && printf "\033[3J"'
@@ -58,6 +60,16 @@ alias rm='rm -i'
 
 # 디렉터리나 파일이 3개 이상일 때 한 번 더 크게 경고받고 싶다면 (선택 사항)
 # alias rm='rm -I'
+
+# 파일 내용을 클립보드로 복사 (예: copyfile file.py) — AI에 전달하거나 다른 곳에 붙여넣기용
+# copyfile() {
+#   if [ -z "$1" ] || [ ! -f "$1" ]; then
+#     echo "usage: copyfile <file>"
+#     return 1
+#   fi
+#   command -v wl-copy >/dev/null 2>&1 || { echo "wl-copy가 없습니다 (wl-clipboard 설치 필요)"; return 1; }
+#   wl-copy -n < "$1" && echo "copied: $1"
+# }
 
 
 # Added by Antigravity CLI installer
