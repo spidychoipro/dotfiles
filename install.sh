@@ -38,4 +38,7 @@ ln -sf "$DOTFILES/yad/settings.conf"        "$CONFIG/yad/settings.conf"
 
 [ "$SHELL" != "/usr/bin/zsh" ] && chsh -s /usr/bin/zsh && echo "shell changed to zsh, re-login required"
 
+# Thunar 다크모드/렌더링 수정 (gvfs · dconf 테마 · css 패치)
+bash "$DOTFILES/thunar-fix/install.sh" || echo "thunar-fix 실패 — 수동 실행: bash $DOTFILES/thunar-fix/install.sh"
+
 echo "done! run: hyprctl reload"
