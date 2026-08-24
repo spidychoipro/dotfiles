@@ -16,7 +16,7 @@ ln -sf "$DOTFILES/hypr/hyprlauncher.conf"   "$CONFIG/hypr/hyprlauncher.conf"
 ln -sf "$DOTFILES/hypr/hyprtoolkit.conf"    "$CONFIG/hypr/hyprtoolkit.conf"
 ln -sf "$DOTFILES/hypr/toggle_window_layout.sh" "$CONFIG/hypr/toggle_window_layout.sh"
 ln -sf "$DOTFILES/hypr/cycle_wallpaper.sh"           "$CONFIG/hypr/cycle_wallpaper.sh"
-ln -sf "$DOTFILES/diagnose.sh"                        "$CONFIG/hypr/diagnose.sh"
+# 진단 스크립트는 $DOTFILES/diagnose.sh 단일본 사용 ($CONFIG/hypr는 이 repo를 가리킴)
 ln -sf "$DOTFILES/swaync/config.json"       "$CONFIG/swaync/config.json"
 ln -sf "$DOTFILES/swaync/style.css"         "$CONFIG/swaync/style.css"
 ln -sf "$DOTFILES/backgrounds"/*            "$CONFIG/backgrounds/"
