@@ -21,14 +21,19 @@ settings.ini에 다크 테마를 적어둬도 dconf에 없는 테마 이름이 �
 bash ~/dotfiles/thunar-fix/install.sh
 ```
 
-gvfs 설치 시 sudo 비밀번호를 묻고, 나머지는 자동 적용.
-실행 중인 Thunar는 재시작 필요: `pkill -x Thunar`
+**진단 기반 동작**: 5개 항목(gvfs / dconf gtk-theme / dconf icon-theme / gtk-3.0 css / gtk-4.0 css)을
+각각 검사해서 **문제가 발견된 것만** 수정한다. 전부 정상이면 아무것도 건드리지 않음.
+테마 대상은 `~/.config/gtk-3.0/settings.ini` 선언값을 우선 참고하고, 미설치면 설치된 폴백 후보 사용.
 
-미리 확인만 하고 싶으면:
+다른 모드:
 
 ```bash
-bash ~/dotfiles/thunar-fix/install.sh --dry-run
+bash ~/dotfiles/thunar-fix/install.sh --check    # 진단만 (수정 없음, 문제 있으면 exit 1)
+bash ~/dotfiles/thunar-fix/install.sh --dry-run  # 적용될 명령 미리보기
 ```
+
+gvfs 설치 시 sudo 비밀번호를 묻고, 나머지는 자동 적용.
+실행 중인 Thunar는 재시작 필요: `pkill -x Thunar`
 
 ## 적용 내역
 
