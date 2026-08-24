@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Hyprland dotfiles 시스템 진단 스크립트 (offline-safe)
+# 사용법: bash diagnose.sh
+# 종료코드: 0=정상, 1=경고/문제 있음
 set -euo pipefail
 
 BOLD='\033[1m'
@@ -8,9 +11,10 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-pass() { echo -e "  ${GREEN}✓${NC} $1"; }
-warn() { echo -e "  ${YELLOW}⚠${NC} $1"; }
-fail() { echo -e "  ${RED}✗${NC} $1"; }
+PASS=0; WARN=0; FAIL=0
+pass() { echo -e "  ${GREEN}✓${NC} $1"; PASS=$((PASS+1)); }
+warn() { echo -e "  ${YELLOW}⚠${NC} $1"; WARN=$((WARN+1)); }
+fail() { echo -e "  ${RED}✗${NC} $1"; FAIL=$((FAIL+1)); }
 info() { echo -e "  ${CYAN}→${NC} $1"; }
 header() { echo -e "\n${BOLD}$1${NC}"; echo "──────────────────────"; }
 
@@ -37,6 +41,7 @@ packages=(
   starship
   pipewire pipewire-pulse wireplumber
   noto-fonts-cjk ttf-jetbrains-mono-nerd
+  thunar gvfs
 )
 
 for pkg in "${packages[@]}"; do
@@ -70,7 +75,6 @@ files=(
   hypr/hyprlauncher.conf
   hypr/hyprtoolkit.conf
   hypr/toggle_window_layout.sh
-  hypr/toggle_term.sh
   swaync/config.json
   swaync/style.css
   swayosd/config.toml
@@ -80,9 +84,10 @@ files=(
   waybar/config
   waybar/style.css
   rofi/config.rasi
-  starship.toml
   brave-flags.conf
 )
+
+# 참고: starship.toml은 $CONFIG 루트에 심mlink되므로 아래 별도 체크에서 다룸
 
 for f in "${files[@]}"; do
   target="$HOME/.config/$f"
@@ -108,10 +113,66 @@ elif [ -f "$HOME/.config/starship.toml" ]; then
   pass "starship.toml"
 fi
 
+# ─── GTK Theme Health ─────────────────────────────────────
+# dconf 값이 settings.ini보다 우선하며, 미설치 테마명이면 GTK가 라이트 폴백함
+# → 파일명 안 보임·주소창 라이트모드 등의 근본 원인 (자세한 것: dotfiles/thunar-fix/)
+header "GTK Theme Health"
+
+check_theme_dir() { # $1=dconf값  $2=검색루트
+  [ -d "$2/$1" ]
+}
+
+if command -v gsettings >/dev/null; then
+  # 1) dconf gtk-theme
+  cur_theme=$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'" || true)
+  ini_theme=$(sed -n 's/^gtk-theme-name=//p' "$HOME/.config/gtk-3.0/settings.ini" 2>/dev/null | head -1)
+  if [ -z "$cur_theme" ]; then
+    warn "dconf gtk-theme 읽기 실패"
+  elif check_theme_dir "$cur_theme" "/usr/share/themes" || check_theme_dir "$cur_theme" "$HOME/.themes"; then
+    pass "gtk-theme='$cur_theme' (installed)"
+  else
+    fail "gtk-theme='$cur_theme' NOT installed → light-mode fallback! (fix: gsettings set org.gnome.desktop.interface gtk-theme '<설치된테마>')"
+  fi
+  # settings.ini와 불일치는 정보성으로만 (둘 다 정상 설치 상태면 무해)
+  if [ -n "$ini_theme" ] && [ "$ini_theme" != "$cur_theme" ]; then
+    if check_theme_dir "$ini_theme" "/usr/share/themes"; then
+      info "settings.ini declares '$ini_theme' but dconf has '$cur_theme' (dconf wins — OK if intentional)"
+    fi
+  fi
+
+  # 2) dconf icon-theme
+  cur_icon=$(gsettings get org.gnome.desktop.interface icon-theme 2>/dev/null | tr -d "'" || true)
+  if [ -z "$cur_icon" ]; then
+    warn "dconf icon-theme 읽기 실패"
+  elif [ -d "/usr/share/icons/$cur_icon" ] || [ -d "$HOME/.local/share/icons/$cur_icon" ]; then
+    pass "icon-theme='$cur_icon' (installed)"
+  else
+    fail "icon-theme='$cur_icon' NOT installed → broken icons (fix: gsettings set org.gnome.desktop.interface icon-theme '<설치된아이콘테마>')"
+  fi
+
+  # 3) 사용자 gtk.css의 위험 패턴 (thunar.css 애니메이션 버그, 미정의 @primary)
+  for gd in gtk-3.0 gtk-4.0; do
+    f="$HOME/.config/$gd/gtk.css"
+    [ -f "$f" ] || continue
+    bad=0
+    if grep -qE '^[[:space:]]*@import[[:space:]]+["'"'"']thunar\.css["'"'"']' "$f"; then
+      fail "$gd/gtk.css: live '@import thunar.css' → opacity animation can leave UI invisible (fix: bash \$DOTFILES/thunar-fix/install.sh)"
+      bad=1
+    fi
+    if grep -q "@define-color theme_selected_fg_color @primary" "$f"; then
+      fail "$gd/gtk.css: undefined @primary color → CSS parser error (fix: bash \$DOTFILES/thunar-fix/install.sh)"
+      bad=1
+    fi
+    [ $bad -eq 0 ] && pass "$gd/gtk.css clean"
+  done
+else
+  warn "gsettings 없음 — GTK 테마 진단 생략"
+fi
+
 # ─── Script Permissions ──────────────────────────────────
 header "Script Permissions"
 
-for script in toggle_window_layout.sh toggle_term.sh diagnose.sh; do
+for script in toggle_window_layout.sh diagnose.sh; do
   f="$HYPR/$script"
   if [ -f "$f" ]; then
     [ -x "$f" ] && pass "$script (+x)" || warn "$script (missing +x)"
@@ -176,18 +237,18 @@ else
   warn "not a git repository"
 fi
 
-# ─── Network-independent Summary ─────────────────────────
+# ─── Summary ──────────────────────────────────────────────
 header "Summary"
-total=0
-issues=0
+echo "  ✓ pass: $PASS   ⚠ warn: $WARN   ✗ fail: $FAIL"
+echo "  Network: offline-safe (no external calls)"
 
-for pkg in "${packages[@]}"; do
-  total=$((total + 1))
-  pacman -Qi "$pkg" &>/dev/null 2>&1 || issues=$((issues + 1))
-done
-
-echo "  Packages: $((total - issues))/$total installed"
-echo "  Network:  offline-safe (no external calls)"
-echo ""
-echo -e "${BOLD}Tip:${NC} Run ${CYAN}sudo pacman -S --needed <package>${NC} for missing packages"
-echo "     All checks are local — no internet required."
+if [ "$FAIL" -gt 0 ]; then
+  echo -e "${BOLD}Result:${NC} ${RED}$FAIL개 문제 발견${NC} — 위 ✗ 항목 참고"
+  exit 1
+elif [ "$WARN" -gt 0 ]; then
+  echo -e "${BOLD}Result:${NC} ${YELLOW}경고 $WARN건${NC} — 필요 시 조치"
+  exit 1
+else
+  echo -e "${BOLD}Result:${NC} ${GREEN}모두 정상${NC}"
+  exit 0
+fi
