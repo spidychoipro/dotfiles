@@ -320,6 +320,13 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
+-- Accessible track controls for THIS laptop: the keysyms above have no physical
+-- key on Latitude 7390. swayosd-client --playerctl shows an OSD and exits 0 even
+-- when nothing is playing, unlike plain playerctl (which errors noisily).
+hl.bind(mainMod .. " + SHIFT + Left",  hl.dsp.exec_cmd("swayosd-client --playerctl prev"),       { locked = true })
+hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.exec_cmd("swayosd-client --playerctl next"),       { locked = true })
+hl.bind(mainMod .. " + SHIFT + space", hl.dsp.exec_cmd("swayosd-client --playerctl play-pause"), { locked = true })
+
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----

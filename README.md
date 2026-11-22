@@ -113,7 +113,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 ## ⌨️ 키보드 단축키
 
 > 나를 위한 워크플로우 흐름: [`docs/personal-workflow.md`](docs/personal-workflow.md) ·
-> 전체 61개 바인드 검토표: [`docs/keybind-inventory.md`](docs/keybind-inventory.md)
+> 전체 64개 바인드 검토표: [`docs/keybind-inventory.md`](docs/keybind-inventory.md)
 
 ### 기본 조작
 
@@ -163,6 +163,18 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | `Super + Alt + L` | **잠금화면** |
 | `Print` | 현재 창 스크린샷 |
 | `Super + Shift + S` | 영역 선택 스크린샷 |
+
+### 소리 / 미디어
+
+| 키 | 기능 |
+|---|---|
+| `Fn + F2` / `Fn + F3` | 볼륨 ↓/↑ (**2%씩**, swayosd OSD) |
+| `Fn + F1` / `Fn + F4` | 스피커 음소거 / 마이크 음소거 |
+| `Fn + ↑` / `Fn + ↓` | 밝기 ↑/↓ |
+| `Super + Shift + ←` / `→` | 이전 / 다음 트랙 (swayosd OSD) |
+| `Super + Shift + Space` | 재생 / 일시정지 (swayosd OSD) |
+
+> Latitude 7390에는 미디어 트랙 전용 물리 키가 없다. 위 `Super+Shift` 조합이 실제로 누를 수 있는 키다.
 
 ### 트랙패드 제스처
 
