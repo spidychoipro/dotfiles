@@ -291,9 +291,13 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
 end
 
--- Scroll through existing workspaces with mainMod + scroll
+-- Scroll through existing workspaces with mainMod + wheel (physical mouse only).
+-- Hyprland does not deliver touchpad 2-finger scroll as a wheel bind, so the
+-- arrow keys below are the keyboard alternative (they wrap the same way).
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mainMod .. " + Left",  hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mainMod .. " + Right", hl.dsp.focus({ workspace = "e+1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
