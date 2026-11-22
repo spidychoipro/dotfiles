@@ -80,6 +80,15 @@
 에러 없이 조용히 끝난다(실측 rc=0). 음악은 작업 ws에서 같이 틀어놓고
 트랙만 위 키로 넘기면 된다. ⚠️ 실제 키 입력 테스트는 아직 안 함.
 
+**플레이어 대상은 `auto` 유지 (고정하지 않음).**
+`swayosd 0.3.2` 소스(`src/actions/mpris.rs`) 기준:
+- `playerctld`가 실행 중이면(지금 실행 중) 그 목록의 첫 번째 플레이어를 쓴다.
+- `playerctld`는 **가장 최근에 활성화된 플레이어를 맨 앞에 둔다.**
+- 없으면 `find_active()` = 실제 재생 중인 플레이어로 폴백.
+
+→ Spotify를 틀면 Spotify, Brave 유튜브를 틀면 Brave를 제어한다.
+`--player spotify`로 고정하면 Brave 소리를 조작할 수 없게 되므로 유지한다.
+
 ### 마무리
 - 캡처: `Print`(창), `Super+Shift+S`(영역)
 - 잠금: `Super+Alt+L`
