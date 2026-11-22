@@ -21,6 +21,12 @@ name="$(basename "$wp")"
 
 ln -sfn "$wp" "$SYMLINK"
 
-hyprctl hyprpaper wallpaper "eDP-1,$wp"
+# 모니터 이름은 런타임에 첫 출력에서 추출 (기기별 포트 이름 무관)
+monitor=$(hyprctl monitors 2>/dev/null | awk '/^Monitor / { sub(/:$/, "", $2); print $2; exit }')
+if [ -n "$monitor" ]; then
+    hyprctl hyprpaper wallpaper "$monitor,$wp"
+else
+    echo "모니터를 찾지 못해 IPC 적용 생략 (hyprpaper fallback 설정 사용)"
+fi
 
 hyprctl notify 1 2500 "rgb(bd93f9)" "배경: $name"

@@ -22,11 +22,15 @@
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+-- 빈 output = 연결된 모든 모니터에 적용 (기기별 포트 이름 무관).
+-- 필요하면 환경변수로 개별 지정: HYPR_MONITOR=<포트이름>, HYPR_MONITOR_SCALE=1.5
+local monitor_output = os.getenv("HYPR_MONITOR") or ""
+local monitor_scale  = tonumber(os.getenv("HYPR_MONITOR_SCALE")) or 1.25
 hl.monitor({
-    output   = "eDP-1",
+    output   = monitor_output,
     mode     = "preferred",
     position = "auto",
-    scale    = 1.25,
+    scale    = monitor_scale,
 })
 
 

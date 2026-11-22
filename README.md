@@ -47,6 +47,35 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 ---
 
+## 🧳 다른 머신에서 가져가기
+
+사용자 경로와 기기별 모니터 이름은 전부 제거했습니다. 새 머신에서 사용자 이름이 달라도 그대로 쓰입니다.
+
+```bash
+git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
+~/dotfiles/install.sh
+# 안내에 따라 재로그인 (또는 hyprctl reload + hyprpaper 재시작 + fcitx5 재시작)
+```
+
+알아두면 좋은 것들:
+
+- **모니터**: 연결된 출력 전부에 자동 적용됩니다. 특정 포트만 지정하려면 실행 전에
+  `HYPR_MONITOR=DP-1 HYPR_MONITOR_SCALE=1.5 hyprctl reload` 처럼 환경변수를 주세요.
+- **배경 이미지**: `backgrounds/anime-*`는 `.gitignore`라 clone에 포함되지 않습니다.
+  기존 머신에서 `scp ~/dotfiles/backgrounds/anime-* 새계정@새머신:~/dotfiles/backgrounds/` 로
+  복사한 뒤 `install.sh`를 다시 실행하면 `current-wallpaper`가 자동 지정됩니다.
+- **한글 입력**: fcitx5 설정은 `~/.config/fcitx5`에 **복사본**으로 깔립니다.
+  실행 중 fcitx5가 저장해도 git 관리 파일(`~/dotfiles/fcitx5`)은 건드리지 않습니다.
+  한/영 전환은 `한/영` 키 · 우측 Alt · `Ctrl+Space`이며, 윈도우 기본처럼 왼쪽 Shift 단독 토글은 꺼져 있습니다.
+  설정을 바꿨다면 `fcitx5-remote -r && fcitx5-remote -s hangul` 로 반영하세요.
+- **OS/버전**: Arch/EndeavourOS 기준입니다. Lua Hyprland 설정(`hl.monitor`)을 쓰므로
+  최신 Hyprland가 필요하고, 패키지명·`/usr/bin/zsh` 경로는 배포판에 따라 조정해야 합니다.
+- **재실행 안전**: `install.sh`는 여러 번 돌려도 자기참조 심링크가 생기지 않습니다.
+
+자세한 변경 내역과 제한 사항은 [`docs/portability-plan.md`](docs/portability-plan.md) 참고.
+
+---
+
 ## 🎨 이렇게 생겼어요
 
 ```
