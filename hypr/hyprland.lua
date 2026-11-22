@@ -227,6 +227,16 @@ hl.config({
     },
 })
 
+-- 3-finger swipe: cycle through EXISTING workspaces only.
+-- Without these, swiping past the last one creates an empty workspace (3, 4, ...)
+-- and then stops; with forever=true it wraps 2 -> 1 -> 2.
+hl.config({
+    gestures = {
+        workspace_swipe_create_new = false,
+        workspace_swipe_forever    = true,
+    },
+})
+
 hl.gesture({
     fingers = 3,
     direction = "horizontal",
@@ -290,14 +300,17 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys with swayosd OSD (handles volume/brightness + display)
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume raise"),   { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume lower"),   { locked = true, repeating = true })
+-- +2/-2 = 2% per press; plain "raise"/"lower" uses swayosd's coarse 5% default.
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume +2"),   { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume -2"),   { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"),   { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("swayosd-client --brightness raise"),      { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("swayosd-client --brightness lower"),      { locked = true, repeating = true })
 
--- Requires playerctl
+-- Requires playerctl. NOTE: Latitude 7390 has NO physical track keys
+-- (Dell Technical Guidebook Table 66 has no media-key Fn combo). These only fire
+-- on an external Dell keyboard/dock that emits XF86Audio* keysyms.
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
