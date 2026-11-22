@@ -3,6 +3,7 @@
 > 분석 기준: **실행 중인 Hyprland 0.56.0 / 설치된 바이너리 0.56.2** (Lua config = 공식 지원, v0.55부터 hyprlang deprecated). 모든 `hl.*` API는 설치 패키지의 공식 스텁 `/usr/share/hypr/stubs/hl.meta.lua`와 `src/config/lua/` 헤더, 그리고 `/usr/share/hypr/hyprland.lua`(공식 예제)로 검증했습니다.
 >
 > **변경된 파일 없음. git working tree clean 확인됨.**
+> 과거 분석 기록 — 현재 워크스페이스/바인드 정책은 `docs/workflow.md` 참고 (역할 라벨 없음, 자동 배치 없음).
 
 ---
 

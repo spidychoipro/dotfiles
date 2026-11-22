@@ -106,6 +106,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 ## ⌨️ 키보드 단축키
 
+> 전체 59개 바인드 검토표는 [`docs/keybind-inventory.md`](docs/keybind-inventory.md) 참고.
+
 ### 기본 조작
 
 | 키 | 기능 |
