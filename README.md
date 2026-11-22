@@ -112,7 +112,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 ## ⌨️ 키보드 단축키
 
-> 전체 61개 바인드 검토표는 [`docs/keybind-inventory.md`](docs/keybind-inventory.md) 참고.
+> 나를 위한 워크플로우 흐름: [`docs/personal-workflow.md`](docs/personal-workflow.md) ·
+> 전체 61개 바인드 검토표: [`docs/keybind-inventory.md`](docs/keybind-inventory.md)
 
 ### 기본 조작
 
