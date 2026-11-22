@@ -150,7 +150,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | `Super + Shift + M` | **Spotify** |
 | `Super + M` | 시스템 종료 메뉴 |
 | `Super + Alt + L` | **잠금화면** |
-| `Super + Print` | 현재 창 스크린샷 |
+| `Print` | 현재 창 스크린샷 |
 | `Super + Shift + S` | 영역 선택 스크린샷 |
 
 ### 트랙패드 제스처

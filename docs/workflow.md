@@ -74,23 +74,14 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 
 ## 2. Scratchpad
 
-### ✅ 결정 (2026-08-09, 사용자 확정 — D안)
+### ✅ 최종 결정 (이후 확정 — 삭제 유지)
 
-**재도입한다. 단, 특수 workspace 방식(A)으로만 구현한다.**
-- 과거 제거된 dropdown 방식(B)은 재도입하지 않는다.
-- **역할 한정**:
-  - GUI 작업 중 잠깐 필요한 명령어 실행
-  - 일회성/짧은 작업
-  - 일반 개발용 터미널을 대체하지 않음
-  - DEV/WEB/GENERAL/MEDIA workspace의 터미널을 대체하지 않음
-  - 장시간 사용하는 터미널은 기존 workspace에서 사용
-- **일반 터미널 workflow와 Scratchpad workflow를 명확히 분리**
-- **검증 규칙 (D안)**:
-  - 실사용하면서 실사용 가치 확인
-  - 사용 빈도가 낮거나 기존 workspace 터미널로 충분하면 제거
-  - 일정 기간 실사용 후 유지 여부 재판단
-  - "일단 넣었으니 유지"하지 않는다
-- **미결정**: 키 (항목 4에서 결정), 구현 시점 (설계 확정 후)
+**재도입하지 않는다. 스크래치패드·드롭다운 터미널 모두 현재 설정에 없다.**
+- 2026-08-09에는 `Super+grave` 특수 workspace 방식 재도입(D안)을 결정했으나,
+  이후 `docs/hyprland-dracula-persona-plan.md`에서 **드롭다운 터미널 재추가 금지,
+  스크래치패드 전부 삭제**로 최종 확정됐다.
+- 현재 `hyprland.lua`에는 `grave`, `toggle_special`, `magic` 관련 바인드/룰이 없다.
+- 아래 분석 근거는 당시 검토 기록으로만 남긴다.
 
 ### 분석 근거 (결정 과정)
 
@@ -107,16 +98,11 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 
 **장단점**: 장점 — "빠른 명령용 임시 공간"으로 고정되면 ws 순회에 포함되지 않아 집중 유지에 유리. 단점 — 사용 빈도가 낮으면 dead key + 숨은 창 부작용 (과거 `magic` 전례). 빈도는 관측 기간 기록이 없어 실사용 검증 필요 → 이것이 D안 검증 규칙의 근거.
 
-### ✅ 키 결정 (2026-08-09, 사용자 확정 — Super+grave)
+### ⛔ 키 결정 철회 (최종 — 미사용)
 
-- Scratchpad 토글 키: **`Super+grave` (`Super+`` `)**
-- 의미 정리:
-  - `Super+Q` = 일반 터미널
-  - `Super+grave` = 임시/빠른 작업용 Scratchpad
-  - Scratchpad는 일반 개발 터미널을 대체하지 않음
-- **Super+S는 사용하지 않는다** — 과거 `magic` special workspace에서 쓰였고 현재 workflow와 혼동 가능.
-- **Super+T도 사용하지 않는다** — Super+Q와 terminal 의미가 겹치고, Shift+T(레이아웃 전환) 바인드와 가까워 혼동 가능.
-- 이 단계에서는 **키만 확정** — 실제 keybind/scratchpad 코드는 아직 수정하지 않음 (구현은 설계 확정 후).
+- 2026-08-09에는 `Super+grave`로 확정했으나 **최종적으로 채택하지 않았다.**
+- 현재 `Super+grave`는 아무 바인드도 없는 빈 키이며, 재추가 금지 대상이다.
+- `Super+S`, `Super+T`도 마찬가지로 사용하지 않는다.
 
 ---
 
@@ -213,7 +199,8 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 
 ### 관찰
 - workspace 이동/창 이동/포커스/스왑/레이아웃은 **완결된 체계** — 추가·변경 불필요.
-- `Super+grave` 포함 **빈 자리가 일부 있음**: grave, Super+R, Super+A, Super+G, Super+N 등 (검증은 `hyprctl binds` 기준). 다만 신규 bind는 이 Phase에서 추가하지 않음.
+- `Super+R`, `Super+A`, `Super+G`, `Super+N` 등 빈 자리가 일부 있음 (검증은 `hyprctl binds` 기준).
+  `Super+grave`는 재추가 금지로 **의도적 미사용**. 신규 bind는 이 Phase에서 추가하지 않음.
 - 한글 입력(fcitx5)의 Hangul 키와 Super 조합 간 충돌은 현재 없음.
 
 ---
@@ -248,8 +235,8 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 |---|------|------|
 | 1 | Workspace 모델: 1=DEV 2=WEB 3=GENERAL 4=MEDIA, 5~10 자유 | ✅ 결정됨 (B안) |
 | 2 | 미디어(Spotify) workspace 정의 — MEDIA(ws4) Spotify 전용, tiled 유지, 영상 등은 관측 후 추가 | ✅ 결정됨 (A안) |
-| 3 | Scratchpad 재도입 — ✅ 결정 (D안): 특수 workspace 방식, 역할 한정, 검증 규칙, 키=Super+grave | ✅ 결정됨 |
-| 4 | Scratchpad 키 | ✅ 결정됨 (Super+grave) |
+| 3 | Scratchpad 재도입 — 당초 D안 결정은 이후 철회됨 | ⛔ 최종: 삭제 유지, 재추가 금지 |
+| 4 | Scratchpad 키 (`Super+grave`) | ⛔ 최종: 미사용 (바인드 없음) |
 | 5 | 자동 배치 대상 — Brave→WEB(2)·Spotify→MEDIA(4) 확정, kitty·Rofi 제외, 미관측 4종 대기 | ✅ 결정됨 → **위치 강제 미적용**(2026-08-10 장기 결정) |
 | 6 | 미관측 앱 class 확인 — ✅ 관측 완료: Thunar=`thunar`→GENERAL, Zathura=`org.pwmt.zathura`→GENERAL, Pavucontrol=`org.pulseaudio.pavucontrol`→floating. Obsidian 제외. 규칙 코드는 미작성 | ✅ 결정됨 → **Pavucontrol floating만 적용**(위치 강제 없음) |
 | 7 | appearance(애니메이션/배경) 조정 여부 — ✅ 결정: ① ws 전환 애니메이션 **속도 상향**(애니 유지, 응답성 개선) ② blur/성능 **조건부**(성능 문제 관측 시에만 축소) ③ 미사용 animation leaf **축소**(핵심 유지). 유지: Dracula·배경 순환·focus border·opacity 1.0 | ✅ 결정됨 |
