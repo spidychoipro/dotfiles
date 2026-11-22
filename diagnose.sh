@@ -93,7 +93,7 @@ for f in "${files[@]}"; do
   target="$HOME/.config/$f"
   if [ -L "$target" ]; then
     link=$(readlink "$target")
-    if [ "$link" = "$DOTFILES/$f" ] || [ "$link" = "$DOTFILES/${f#hypr/}" ]; then
+    if [ "$link" = "$DOTFILES/$f" ] || [ "$link" = "$DOTFILES/${f#hypr/}" ] || [ "$link" = "$DOTFILES/brave/$f" ]; then
       pass "$f (→ dotfiles)"
     else
       warn "$f (symlink → $link)"
