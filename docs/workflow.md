@@ -1,6 +1,7 @@
 # Hyprland Workflow 설계 문서
 
-> 상태: **설계 초안 (Phase 2)** — 코드 변경 없음. 결론은 내리지 않았으며, 확정이 필요한 항목은 "사용자 결정 필요"로 표시.
+> 상태: **최종 결정 반영 (2026-11-23)** — 아래 결정사항은 실제로 설정에 반영됨.
+> historical 분석 섹션은 결정 과정 기록으로만 남긴다. §7 요약표가 현재 기준.
 > 기준점: Phase 0 snapshot (`~/dotfiles-phase0-snapshot-20260809-231006`), Phase 1 종료 시점의 runtime.
 
 ---
@@ -36,7 +37,10 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 - 2026-08-09에는 `1=DEV, 2=WEB, 3=GENERAL, 4=MEDIA` 라벨안(B안)을 확정했으나,
   실제 사용에서 kitty와 Brave가 같은 ws에 공존하는 등 역할 분리가 맞지 않아 철회했다.
 - 자동 배치/고정 규칙은 없다 (§3의 2026-08-10 장기 결정과 동일).
-- `Super+N` 이동, `Super+Shift+N` 창 이동, `Super+휠` 순환 체계만 유지한다.
+- `Super+N` 이동, `Super+Shift+N` 창 이동, `Super+휠` 순환 체계를 유지한다.
+- 순환 보강(2026-11-23): 3손가락 가로 스와이프와 `Super+←/→`도 **열려 있는 ws만 순환**한다.
+  (`workspace_swipe_create_new=false`, `workspace_swipe_forever=true`, `Super+휠`은 실제 마우스 전용.
+  트랙패드 2손가락 스크롤은 Hyprland가 휠 바인드로 전달하지 않아 동작하지 않는다.)
 - 아래 분석은 당시 검토 기록으로만 남긴다.
 
 ### 분석 근거 (결정 과정)
@@ -179,7 +183,9 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 | **Launcher** | `Super+space` | rofi (drun) |
 | **Workspace 이동** | `Super+0-9` | ws 1-10 |
 | **Workspace 간 창 이동** | `Super+Shift+0-9` | 현재 창 → ws N |
-| **ws 스크롤** | `Super+mouse_down/up` | ws e+1 / e-1 |
+| **ws 스크롤** | `Super+mouse_down/up` | ws e+1 / e-1 (실제 마우스 휠만) |
+| **ws 순환 (키보드)** | `Super+←` / `Super+→` | ws e-1 / e+1, 열려 있는 ws만 왕복 |
+| **ws 순환 (트랙패드)** | 3손가락 가로 스와이프 | 열려 있는 ws만 왕복, 빈 ws 안 생김 |
 | **Layout 전환** | `Super+Shift+t` | dwindle ↔ master (toggle_window_layout.sh) |
 | **Pseudo tiling** | `Super+P` | toggle pseudo |
 | **Fullscreen** | `Super+F` | toggle fullscreen |
@@ -194,7 +200,8 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 ### 관찰
 - workspace 이동/창 이동/포커스/스왑/레이아웃은 **완결된 체계** — 추가·변경 불필요.
 - `Super+R`, `Super+A`, `Super+G`, `Super+N` 등 빈 자리가 일부 있음 (검증은 `hyprctl binds` 기준).
-  `Super+grave`는 재추가 금지로 **의도적 미사용**. 신규 bind는 이 Phase에서 추가하지 않음.
+  `Super+grave`는 재추가 금지로 **의도적 미사용**. 당시 Phase에서는 신규 bind를 추가하지 않았으나,
+  이후 트랙패드 휠 미지원 대안으로 `Super+←/→`(60, 61번)가 사용자 요청으로 추가됨.
 - 한글 입력(fcitx5)의 Hangul 키와 Super 조합 간 충돌은 현재 없음.
 
 ---
@@ -204,21 +211,24 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 ### 분석
 - 현재 dotfiles의 정체성은 **시각적 요소**(Dracula, 애니 배경 20종 순환, 애니메이션)가 지배적이고, workflow 레이어는 공식 예제 골격 그대로(비교적 제네릭)인 상태.
 - workflow 설계는 appearance와 독립적: 배치/ws/키 논리는 색·배경·애니메이션 값과 결합하지 않음 → **순서상 workflow를 먼저 확정하고 appearance를 그 위에 얹는 구조가 자연스럽다**.
-- 단, 역방향 영향도 있음: (a) workspace 전환 애니메이션(workspaces leaf, speed 2.5)은 잦은 ws 이동 시 체감 속도에 영향 → workflow(빈번한 ws 전환)가 appearance(애니메이션 속도/끄기)에 제약을 줄 수 있음. (b) 배경 순환/브랜딩은 workflow와 무관해도 사용자 만족도에 기여 → "성능상 제거" 같은 결론은 아님.
+- 단, 역방향 영향도 있음: (a) workspace 전환 애니메이션은 잦은 ws 이동 시 체감 속도에 영향 → workflow(빈번한 ws 전환)가 appearance(애니메이션 속도/끄기)에 제약을 줄 수 있음. (b) 배경 순환/브랜딩은 workflow와 무관해도 사용자 만족도에 기여 → "성능상 제거" 같은 결론은 아님.
 - **결론**: "workflow가 먼저, appearance는 그 위"를 원칙으로 하되, appearance 무결정 삭제·최소화를 주장하지 않는다. workflow 변경 시 그 안에서 appearance 조정(예: 애니메이션 속도)을 별도 결정 항목으로 둔다.
 
-### 사용자 결정 필요
-- 애니메이션/배경 등 appearance 요소를 workflow 우선으로 조정할지, 현행 유지할지
+### ✅ 결정 반영됨 (§7 항목 7)
+- ws 전환 애니메이션: 유지하되 **speed 2.5 → 6으로 상향** (workspaces/workspacesIn/workspacesOut 모두).
+- blur: 현재 `size=3, passes=1` 유지 — 성능 문제 관측 시에만 축소.
+- 미사용 leaf `fadeLayersIn`/`fadeLayersOut` 비활성화. Dracula·배경 순환·focus border·opacity 1.0은 유지.
 
 ---
 
-## 6. Known Issues (확인된 repository 문제 — 해결 안 함)
+## 6. Known Issues
 
-1. **`cycle_wallpaper.sh`가 git tracked 설정을 런타임에 직접 수정**
-   - `sed -i`로 `hypr/hyprpaper.conf`와 `hypr/hyprlock.conf`의 `path` 라인을 교체 (Super+W 실행 시).
-   - 두 파일은 `~/.config/hypr` → `dotfiles/hypr` 심링크 경유이므로 **tracked 파일이 변경**됨 → `git status`가 dirty해지고, 커밋 시 배경 파일명이 의도와 무관하게 포함될 수 있음.
-   - Phase 1에서 실제로 관측됨 (23:15 SUPER+W 실행으로 두 파일의 path 변경, hyprlock.conf diff 오염).
-   - 후보 개선 방향(미적용): wallpaper 상태를 tracked 파일 밖으로 분리 / 런타임 적용만 하고 설정 파일은 건드리지 않기 / mutable 파일을 .gitignore / 전용 상태 파일 + reload.
+1. **`cycle_wallpaper.sh` tracked 파일 오염 — ✅ 해결됨 (심링크 방식, §7 항목 8 적용)**
+   - 과거에는 `sed -i`로 `hypr/hyprpaper.conf`와 `hypr/hyprlock.conf`의 `path`를 직접 교체해
+     `git status`가 dirty해졌다.
+   - 현재는 두 설정 파일이 고정 경로 `~/.config/hypr/current-wallpaper`를 가리키고,
+     스크립트는 이 **심링크만** 재지정한다. tracked 설정 파일은 변경되지 않는다.
+   - 상태 인덱스는 `~/.cache/hypr-wallpaper-idx`에 저장된다.
 2. (참고) 하드코딩 `/home/hoco30` 경로가 hyprpaper.conf·cycle_wallpaper.sh 등에 존재 — Known Issues로 기록만.
 
 ---
@@ -234,5 +244,5 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 | 5 | 자동 배치 대상 — Brave→WEB(2)·Spotify→MEDIA(4) 확정, kitty·Rofi 제외, 미관측 4종 대기 | ✅ 결정됨 → **위치 강제 미적용**(2026-08-10 장기 결정) |
 | 6 | 미관측 앱 class 확인 — ✅ 관측 완료: Thunar=`thunar`→GENERAL, Zathura=`org.pwmt.zathura`→GENERAL, Pavucontrol=`org.pulseaudio.pavucontrol`→floating. Obsidian 제외. 규칙 코드는 미작성 | ✅ 결정됨 → **Pavucontrol floating만 적용**(위치 강제 없음) |
 | 7 | appearance(애니메이션/배경) 조정 여부 — ✅ 결정: ① ws 전환 애니메이션 **속도 상향**(애니 유지, 응답성 개선) ② blur/성능 **조건부**(성능 문제 관측 시에만 축소) ③ 미사용 animation leaf **축소**(핵심 유지). 유지: Dracula·배경 순환·focus border·opacity 1.0 | ✅ 결정됨 |
-| 8 | cycle_wallpaper.sh tracked 파일 오염 해결 — ✅ 결정: **심링크 방식**. hyprpaper.conf·hyprlock.conf의 path를 고정 심링크(예: `~/.config/hypr/current-wallpaper`)로 지정, 순환 시 심링크만 재지정 → tracked 파일 수정 없음. | ✅ 결정됨 |
+| 8 | cycle_wallpaper.sh tracked 파일 오염 해결 — **심링크 방식 적용 완료**. hyprpaper.conf·hyprlock.conf의 path가 `~/.config/hypr/current-wallpaper`를 가리키고, 순환 시 심링크만 재지정 → tracked 파일 수정 없음. 인덱스는 `~/.cache/hypr-wallpaper-idx`. | ✅ 구현 완료 |
 | 9 | hyprlock.conf "Status word" label 블록 — ✅ 결정: **제거 유지 + 커밋** (commit `d8b485c`). wallpaper path는 HEAD로 원복해 커밋 오염 제외 | ✅ 결정됨 (커밋 d8b485c) |
