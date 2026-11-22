@@ -1,6 +1,12 @@
 # 🧛 dotfiles — Hyprland + Dracula Desktop
 
-> spidychoipro의 Hyprland / EndeavourOS 데스크탑 환경을 그대로 가져다 쓰세요!
+> spidychoipro의 Hyprland / EndeavourOS 데스크탑 환경입니다. 가져가서 참고하되, 아래 성격을 먼저 읽어주세요.
+
+> ⚠️ **범용 dotfiles가 아닙니다.** 이 설정은 작성자의 개인 기준 — 자유 워크스페이스(역할 라벨 없음),
+> Dell Latitude 7390 / 단일 모니터, 윈도우식 한/영 입력, Dracula + 애니 배경, Super 기반 키바인드 —
+> 에 맞춰져 있습니다. 다른 머신·취향에서는 그대로 맞지 않을 수 있으니
+> [`docs/portability-plan.md`](docs/portability-plan.md)와 [`docs/keybind-inventory.md`](docs/keybind-inventory.md)를
+> 보고 자신의 환경에 맞게 조정해서 쓰세요.
 
 ![Hyprland](https://img.shields.io/badge/WM-Hyprland-ff79c6)
 ![Theme](https://img.shields.io/badge/Theme-Dracula-bd93f9)
