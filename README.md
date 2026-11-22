@@ -144,6 +144,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + 1~0` | 작업공간 1~10 이동 |
 | `Super + Shift + 1~0` | 창을 작업공간 1~10으로 이동 |
+| `Super + ←` / `Super + →` | 이전/다음 작업공간 순환 (열려 있는 곳만, 1↔2 왕복) |
+| `Super + 휠` | 마우스 휠로 작업공간 순환 (실제 마우스만, 트랙패드 미지원) |
 
 ### 실행 / 시스템
 
@@ -166,7 +168,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | 제스처 | 기능 |
 |---|---|
 | 세 손가락 좌우 스와이프 | 열려 있는 작업공간만 순환 (1↔2 왕복, 빈 공간 안 생김) |
-| 두 손가락 스크롤 | 자연스크롤 |
+| 두 손가락 스크롤 | 자연스크롤 (작업공간 전환은 안 됨 — Hyprland가 휠 바인드로 안 보냄) |
 | 탭 | 왼쪽 클릭 |
 | 두 손가락 탭 | 오른쪽 클릭 |
 
