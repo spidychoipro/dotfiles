@@ -68,37 +68,44 @@
 | 48 | `Super+좌클릭 드래그` | 창 이동 |
 | 49 | `Super+우클릭 드래그` | 창 크기 조절 |
 
-## 6. 트랙패드 제스처 (바인드 아님, hyprland.lua 230행)
+## 6. 트랙패드 제스처 (바인드 아님)
 
 | 동작 | 확인 방법 |
 |------|-----------|
-| 3손가락 좌우 스와이프 | 워크스페이스 전환 (`Super+휠`과 같은 동작, 트랙패드용) |
+| 3손가락 좌우 스와이프 | **열려 있는 워크스페이스만 순환** (1↔2 왕복, 빈 3번 안 생김) |
 
 > `Super+휠`이 트랙패드에서 불편하면 이 제스처를 쓰면 된다.
+> `gestures.workspace_swipe_create_new = false` + `workspace_swipe_forever = true` 로
+> 마지막 워크스페이스에서 처음으로 돌아오게 고쳤다.
 > 키보드 대안이 필요하면 `Super+←/→`가 현재 비어 있다 (아직 바인드 안 함).
 
 ## 7. 멀티미디어 (10개, 잠금화면에서도 동작)
 
-> 물리 키는 Dell Latitude 7390 기준 (매뉴얼 Hot Key 표 + udev hwdb 확인).
-> 56~59번은 F키가 아니라 키캡에 ⏮/⏯/⏭ 아이콘이 있는 전용 미디어 키다.
-> 정확한 keysym이 궁금하면 터미널에서 `xkbcli interactive-wayland -1` 실행 후 해당 키를 누르면
-> `XF86AudioNext` 처럼 출력된다.
+> 물리 키는 Dell 기술 가이드(Table 66, Latitude 7290/7390 Hot Key combinations) 기준.
+> 50~55번만 이 노트북에서 실제로 누를 수 있다.
+> keysym을 직접 확인: 터미널에서 `xkbcli interactive-wayland -1` 실행 후 키를 누르면
+> `XF86AudioNext`처럼 출력된다.
 
 | # | 물리 키 | keysym | 동작 | 확인 방법 |
 |---|---------|--------|------|-----------|
-| 50 | `Fn+F3` (스피커+) | `XF86AudioRaiseVolume` | 볼륨 업 | 화면에 swayosd OSD |
-| 51 | `Fn+F2` (스피커-) | `XF86AudioLowerVolume` | 볼륨 다운 | 화면에 swayosd OSD |
+| 50 | `Fn+F3` (스피커+) | `XF86AudioRaiseVolume` | 볼륨 업 (2%씩) | 화면에 swayosd OSD |
+| 51 | `Fn+F2` (스피커-) | `XF86AudioLowerVolume` | 볼륨 다운 (2%씩) | 화면에 swayosd OSD |
 | 52 | `Fn+F1` (스피커X) | `XF86AudioMute` | 음소거 | 화면에 swayosd OSD |
 | 53 | `Fn+F4` (마이크X) | `XF86AudioMicMute` | 마이크 음소거 | 화면에 swayosd OSD |
 | 54 | `Fn+↑` | `XF86MonBrightnessUp` | 밝기 업 | 화면 밝기 변화 |
 | 55 | `Fn+↓` | `XF86MonBrightnessDown` | 밝기 다운 | 화면 밝기 변화 |
-| 56 | 미디어 `⏭` | `XF86AudioNext` | 다음 트랙 | Spotify 재생 중일 때 곡 변경 |
-| 57 | 미디어 `⏸` | `XF86AudioPause` | 일시정지 | Spotify 재생 중일 때 정지 |
-| 58 | 미디어 `▶` | `XF86AudioPlay` | 재생 | Spotify 일시정지 중일 때 재생 |
-| 59 | 미디어 `⏮` | `XF86AudioPrev` | 이전 트랙 | Spotify 재생 중일 때 곡 변경 |
+| 56 | **없음** | `XF86AudioNext` | 다음 트랙 | 이 노트북에 물리 키 없음 |
+| 57 | **없음** | `XF86AudioPause` | 일시정지 | 이 노트북에 물리 키 없음 |
+| 58 | **없음** | `XF86AudioPlay` | 재생 | 이 노트북에 물리 키 없음 |
+| 59 | **없음** | `XF86AudioPrev` | 이전 트랙 | 이 노트북에 물리 키 없음 |
 
-> 56~59번은 `playerctl`을 쓰므로 **재생 중인 플레이어(Spotify 등)가 없으면 아무 일도 안 일어난다.**
-> 즉 "안 되는 게 아니라 조건이 안 맞은 것"일 수 있으니 Spotify를 켜고 테스트할 것.
+> **56~59번은 누를 키가 없다.** Dell 기술 가이드의 Latitude 7390 Hot Key 표에는
+> 재생/일시정지/이전/다음 곡에 해당하는 Fn 조합이 없다. udev hwdb의
+> `KEYBOARD_KEY_81~84=playpause/stopcd/previoussong/nextsong` 은 **다른 Dell 모델의 전면 패널 버튼**
+> 용 일반 매핑이라 이 모델에는 해당 키가 없다. 외부 Dell 키보드/독을 물리면 동작할 수는 있다.
+>
+> 설령 키가 있어도 `playerctl`을 쓰므로 **재생 중인 플레이어(Spotify 등)가 없으면 아무 일도 안 일어난다.**
+> 56~59번을 실제로 쓰고 싶으면 `Super+Shift+←/→` 같은 누를 수 있는 조합으로 바꿔야 한다.
 
 ---
 
