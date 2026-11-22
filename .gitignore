@@ -1,0 +1,24 @@
+# 저작권 있는 이미지 — GitHub 업로드 제외 (로컬에만 유지)
+fastfetch/mumei.png
+fastfetch/*.png
+
+# 애니 배경화면 (저작권, GitHub 업로드 제외)
+backgrounds/anime-*
+
+# fcitx5 런타임 캐시 (자동 갱신)
+fcitx5/conf/cached_layouts
+
+# 백업/임시
+*.bak
+*/kitty_bak_*
+.DS_Store
+
+# 배경 순환 런타임 심링크 (cycle_wallpaper.sh가 재지정)
+hypr/current-wallpaper
+
+# 편집기/러너
+*.log
+
+# 시스템 테마(Dracula 패키지) 제공 파일 — 심링크이므로 저장소 제외
+gtk-4.0/gtk.css
+gtk-4.0/gtk-dark.css

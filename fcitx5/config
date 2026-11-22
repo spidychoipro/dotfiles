@@ -23,7 +23,9 @@ ModifierOnlyKeyTimeout=250
 0=Hangul_Romaja
 
 [Hotkey/AltTriggerKeys]
-0=Shift_L
+# Shift 단독 누름으로 한/영 전환하지 않음 (윈도우 한글 IME와 동일하게
+# 한/영 키와 우측 Alt만 토글). 필요하면 아래 줄 주석을 해제.
+# 0=Shift_L
 
 [Hotkey/EnumerateGroupForwardKeys]
 0=Super+space

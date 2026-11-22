@@ -13,7 +13,7 @@
     "modules-right": [
         "idle_inhibitor",
         "cpu",
-        "battery",
+        "custom/battery",
         "pulseaudio",
         "network",
         "custom/bluetooth",
@@ -38,16 +38,12 @@
         "format": " {usage}%",
         "tooltip": true
     },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon}{capacity}%",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% 󰃨",
-        "format-plugged": "{capacity}% ",
-        "format-icons": ["", "", "", "", ""]
+    "custom/battery": {
+        "exec": "$HOME/.config/waybar/battery.sh",
+        "return-type": "json",
+        "restart-interval": 5,
+        "persistent": true,
+        "format": "{}"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
@@ -66,10 +62,11 @@
         "on-click": "pavucontrol"
     },
     "network": {
-        "format-wifi": "",
+        "format-wifi": " {essid}",
         "format-ethernet": "󰊗",
         "format-disconnected": "⚠",
-        "tooltip-format": "{essid} ({signalStrength}%) {ifname}"
+        "tooltip-format": "{essid} ({signalStrength}%) {ifname}",
+        "on-click": "$HOME/.config/waybar/network.sh"
     },
     "custom/bluetooth": {
         "exec": "$HOME/.config/waybar/bluetooth.py 2> /dev/null",
