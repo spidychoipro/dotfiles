@@ -200,13 +200,10 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 - 어두운 Dracula 배경 + 블러
 - 5분 자동 잠금 → 10분 자동 절전
 - `Super + Alt + L`로 수동 잠금
-- 절전 재개 시 깨우기 위해 누른 키가 비밀번호 칸으로 들어가지 않도록,
-  절전 직전에 hyprlock을 종료하고 재개 0.3초 후 다시 띄운다 (세션 잠금은 유지).
-  `before_sleep_cmd`는 비동기라 실제 종료는 600초 리스너의 `on-timeout`에서 하고,
-  플래그(`~/.cache/hyprlock-suspend.flag`)로 절전 중 `lock_cmd`가 다시 띄우지 않게 한다.
-  `before_sleep_cmd`에는 `pkill`을 넣지 않는다 — 절전 중 멈춘 셸이 재개 뒤에 실행되어
-  새로 띄운 잠금화면을 다시 죽일 수 있기 때문.
-  잠금화면에서 `Space` 입력 자체는 정상 동작한다.
+- 절전 재개 시 깨우기 위해 누른 `Space`가 비밀번호 칸으로 들어가지 않도록,
+  절전 직전에 `~/.cache/hypr-wake-space.flag`를 만들고 재개 1초 뒤 지운다.
+  그동안 첫 `Space`만 소비하고, 플래그가 없으면 평소처럼 입력된다.
+  hyprlock은 죽이지 않는다 — 세션 잠금과 잠금화면 프로세스가 그대로 유지된다.
 
 ---
 

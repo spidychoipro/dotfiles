@@ -327,6 +327,20 @@ hl.bind(mainMod .. " + SHIFT + Left",  hl.dsp.exec_cmd("swayosd-client --playerc
 hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.exec_cmd("swayosd-client --playerctl next"),       { locked = true })
 hl.bind(mainMod .. " + SHIFT + space", hl.dsp.exec_cmd("swayosd-client --playerctl play-pause"), { locked = true })
 
+-- 절전 재개 직후 깨우기 위해 누른 Space는 비밀번호 칸에 넣지 않는다.
+-- hypridle이 절전 직전에 플래그를 만들고 재개 1초 뒤 지우므로, 그 첫 Space만 소비한다.
+-- 플래그가 없는 평상시(비밀번호 타이핑 포함)에는 Space를 그대로 전달한다.
+local wakeSpaceFlag = (os.getenv("HOME") or "/tmp") .. "/.cache/hypr-wake-space.flag"
+hl.bind("space", function()
+    local f = io.open(wakeSpaceFlag, "r")
+    if f then
+        io.close(f)
+        os.remove(wakeSpaceFlag)
+        return { ok = true, pass_event = false }
+    end
+    return { ok = true, pass_event = true }
+end, { locked = true, auto_consuming = true })
+
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
