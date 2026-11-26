@@ -199,9 +199,10 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 
 ### 관찰
 - workspace 이동/창 이동/포커스/스왑/레이아웃은 **완결된 체계** — 추가·변경 불필요.
-- `Super+R`, `Super+A`, `Super+G`, `Super+N` 등 빈 자리가 일부 있음 (검증은 `hyprctl binds` 기준).
+- `Super+A`, `Super+G`, `Super+N` 등 빈 자리가 일부 있음 (검증은 `hyprctl binds` 기준). `Super+R`는 분할 전환(66번)으로 사용 중.
   `Super+grave`는 재추가 금지로 **의도적 미사용**. 당시 Phase에서는 신규 bind를 추가하지 않았으나,
   이후 트랙패드 휠 미지원 대안으로 `Super+←/→`(60, 61번)가 사용자 요청으로 추가됨.
+  절전 깨우기 `Space`(65번), 분할 방향 전환 `Super+R`(66번)도 이후 요청으로 추가됨.
 - 한글 입력(fcitx5)의 Hangul 키와 Super 조합 간 충돌은 현재 없음.
 
 ---

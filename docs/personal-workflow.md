@@ -54,7 +54,7 @@
 
 ### 켜고 작업 시작
 - 부팅 시 자동 실행: `swayosd-server`, `hyprpaper` + `waybar` + `swaync` + `hypridle`,
-  `cliphist` 감시, `fcitx5`. (Quickshell 없음)
+  `cliphist` 감시, `fcitx5`, `playerctld`. (Quickshell 없음)
 - 터미널: `Super+Q` (kitty). 주로 **2번 ws**에서 많이 연다.
 - 앱 실행: `Super+Space` (rofi), `Super+E`(thunar), `Super+B`(Brave),
   `Super+Shift+M`(Spotify), `Super+D`(PDF → zathura)
@@ -62,6 +62,7 @@
 ### 작업 중 (창/레이아웃)
 - 포커스 이동 `Super+h/j/k/l`, 창 스왑 `Super+Shift+h/j/k/l`
 - 레이아웃 전환 `Super+Shift+T` (dwindle ↔ master)
+- **분할 방향 전환 `Super+R`** — 두 창이 위/아래면 좌/우로, 좌/우면 위/아래로 (dwindle)
 - 전체화면 `Super+F`, 의사 타일링 `Super+P`, 창 닫기 `Super+C`
 - 클립보드 `Super+V`, 배경 순환 `Super+W`
 
@@ -126,7 +127,7 @@ waybar 미디어 위젯·클릭/스크롤·키바인드가 `waybar/media.sh`라�
 
 1. `Super+←/→` 실제 키 입력으로 1↔2 왕복 (바인드 등록은 확인됨)
 2. `Super+Shift+←/→/Space` 실제 키 입력으로 트랙 제어 + OSD 확인
-3. 64개 바인드 중 keep/change/delete 표시 → `docs/keybind-inventory.md` 번호로 지정
+3. 66개 바인드 중 keep/change/delete 표시 → `docs/keybind-inventory.md` 번호로 지정
 4. 볼륨 2% 스텝 체감 확인
 5. 실제 두 번째 머신에 설치해 보기 (가짜 홈 시뮬레이션은 통과했음)
 
@@ -143,7 +144,7 @@ bash ~/dotfiles/diagnose.sh          # 현재 68 pass / 0 warn / 0 fail
 hyprctl configerrors                 # 설정 파싱 오류
 hyprctl getoption gestures:workspace_swipe_create_new
 hyprctl getoption gestures:workspace_swipe_forever
-hyprctl binds | grep -c '^bind'      # 현재 64개
+hyprctl binds | grep -c '^bind'      # 현재 66개
 ```
 
 변경 사항은 `agent/publish-hyprland-dotfiles`에 커밋 후 `main`으로 머지해서
