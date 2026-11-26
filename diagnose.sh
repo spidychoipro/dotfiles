@@ -183,6 +183,50 @@ if [ -f "$DOTFILES/diagnose.sh" ]; then
   [ -x "$DOTFILES/diagnose.sh" ] || warn "diagnose.sh in dotfiles (missing +x)"
 fi
 
+# ─── Spotify / SpotX Updater ─────────────────────────────
+header "SpotX Updater"
+
+spotx_script="$DOTFILES/spotx-update.sh"
+if [ -f "$spotx_script" ]; then
+  pass "spotx-update.sh (present)"
+  [ -x "$spotx_script" ] && pass "spotx-update.sh (+x)" || warn "spotx-update.sh (missing +x)"
+  if bash -n "$spotx_script" 2>/dev/null; then
+    pass "spotx-update.sh syntax"
+  else
+    fail "spotx-update.sh syntax error"
+  fi
+  if "$spotx_script" --help 2>/dev/null | grep -q -- '--apply'; then
+    pass "spotx-update.sh --help"
+  else
+    warn "spotx-update.sh --help (--apply not listed)"
+  fi
+else
+  fail "spotx-update.sh (missing)"
+fi
+
+if grep -q 'spotx-update.sh' "$DOTFILES/README.md" 2>/dev/null; then
+  pass "README documents spotx-update.sh"
+else
+  warn "README does not mention spotx-update.sh"
+fi
+if grep -q 'SpotX' "$DOTFILES/docs/personal-workflow.md" 2>/dev/null; then
+  pass "personal-workflow documents SpotX"
+else
+  warn "personal-workflow does not mention SpotX"
+fi
+
+if pacman -Qi spotify >/dev/null 2>&1; then
+  pass "spotify package installed"
+  if command -v unzip >/dev/null 2>&1 \
+     && { unzip -p /opt/spotify/Apps/xpui.spa xpui.js xpui-snapshot.js 2>/dev/null || true; } | grep -F 'SpotX' >/dev/null; then
+    pass "SpotX patch present in xpui.spa"
+  else
+    warn "SpotX patch not present in xpui.spa (run ~/dotfiles/spotx-update.sh --apply)"
+  fi
+else
+  info "spotify not installed (updater stays in dotfiles for other machines)"
+fi
+
 # ─── Running Processes ───────────────────────────────────
 header "Running Processes"
 
