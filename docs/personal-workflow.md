@@ -143,6 +143,10 @@ waybar 미디어 위젯·클릭/스크롤·키바인드가 `waybar/media.sh`라�
 3. 66개 바인드 중 keep/change/delete 표시 → `docs/keybind-inventory.md` 번호로 지정
 4. 볼륨 2% 스텝 체감 확인 → 완료 ✅ (2026-11-26, 2% 괜찮음)
 5. 실제 두 번째 머신에 설치해 보기 (가짜 홈 시뮬레이션은 통과했음)
+6. 화면 공유 필요 여부 미확정 ⚠️. 지금은 `xdg-desktop-portal-hyprland`가 없어서
+   포털 화면 공유/녹화는 동작하지 않는다. 과거 발열 기억이 있어 일단 넣지 않았다.
+   로컬 캡처(`Print`, `Super+Shift+S`)는 `hyprshot`로 정상 동작한다.
+   필요해지면 `sudo pacman -S xdg-desktop-portal-hyprland` (grim/slurp는 이미 설치됨).
 
 > 참고: 56~59번(물리 키 없는 XF86 트랙 바인드)은 **삭제하지 않고 유지**했다.
 > 외부 Dell 키보드/독을 물리면 동작할 수 있기 때문이고, 실제로 누를 수 있는
@@ -153,7 +157,7 @@ waybar 미디어 위젯·클릭/스크롤·키바인드가 `waybar/media.sh`라�
 ## 6. 문제 생기면
 
 ```bash
-bash ~/dotfiles/diagnose.sh          # 현재 68 pass / 0 warn / 0 fail
+bash ~/dotfiles/diagnose.sh          # 현재 80 pass / 0 warn / 0 fail
 hyprctl configerrors                 # 설정 파싱 오류
 hyprctl getoption gestures:workspace_swipe_create_new
 hyprctl getoption gestures:workspace_swipe_forever
