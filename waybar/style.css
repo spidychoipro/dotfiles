@@ -65,6 +65,14 @@ window#waybar {
     color: @cyan;
 }
 
+#custom-media.paused {
+    color: @purple;
+}
+
+#custom-media.idle {
+    color: @text-dim;
+}
+
 #idle_inhibitor,
 #cpu,
 #battery,

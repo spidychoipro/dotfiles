@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Waybar media widget.
 
-Shows exactly the player that a plain `playerctl` command controls, so the
-widget, click (play-pause) and scroll (prev/next) always act on the same player.
+Asks media.sh for the current target, the same script used by click/scroll and
+the keyboard binds. A playing player wins over the recently-active default, so
+the visible track is always the one the controls will act on.
 """
 import json
+import os
 import re
 import subprocess
 
 from wcwidth import wcswidth
 
 W = 40
-FORMAT = "{{playerName}}|{{status}}|{{artist}}|{{title}}"
+MEDIA_SH = os.path.expanduser("~/.config/waybar/media.sh")
 
 
 def clean(s):
@@ -35,8 +37,8 @@ def trunc(s, n):
 def get():
     try:
         out = subprocess.check_output(
-            ["playerctl", "metadata", "--format", FORMAT],
-            stderr=subprocess.DEVNULL, timeout=1,
+            [MEDIA_SH, "metadata"],
+            stderr=subprocess.DEVNULL, timeout=2,
         ).decode().strip()
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired,
             FileNotFoundError):
