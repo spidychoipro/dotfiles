@@ -117,7 +117,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 ## ⌨️ 키보드 단축키
 
 > 나를 위한 워크플로우 흐름: [`docs/personal-workflow.md`](docs/personal-workflow.md) ·
-> 전체 64개 바인드 검토표: [`docs/keybind-inventory.md`](docs/keybind-inventory.md)
+> 전체 66개 바인드 검토표: [`docs/keybind-inventory.md`](docs/keybind-inventory.md)
 
 ### 기본 조작
 
@@ -142,6 +142,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + Shift + T` | **Dwindle** ↔ **Master** 레이아웃 전환 |
 | `Super + Shift + T` 후 `Super + h/j/k/l` | Master 레이아웃에서 자유롭게 창 배치 |
+| `Super + R` | 두 창의 **위/아래 ↔ 좌/우 분할 방향 전환** (Dwindle) |
 
 ### 작업공간
 
