@@ -150,9 +150,10 @@
 | # | 키 | 동작 | 확인 방법 |
 |---|----|------|-----------|
 | 65 | `Space` (단독) | 절전 재개 후 첫 `Space`만 소비 → hyprlock 비밀번호 칸에 안 들어감 | 평상시엔 그대로 타이핑됨 |
-| 66 | `Super+R` | 두 창의 위/아래 ↔ 좌/우 분할 전환 (`dwindle` 전용, `togglesplit`) | 창 2개 띄우고 누르면 가로/세로 바뀜 |
+| 66 | `Super+R` | 두 창의 위/아래 ↔ 좌/우 분할 전환 (`dwindle`=`togglesplit`, `master`=`orientationnext`) | 창 2개 띄우고 누르면 가로/세로 바뀜 |
 
-> 66번은 `dwindle`에서만 동작한다. `master` 레이아웃이면 `Super+Shift+T`로 돌아와서 쓴다.
+> 66번은 `~/.config/hypr/toggle_split.sh`가 현재 `tiledLayout`을 읽어 두 레이아웃 모두 처리한다.
+> `master`에서는 orientation이 left→top→right→bottom 순으로 순환한다.
 
 ---
 

@@ -142,7 +142,7 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 |---|---|
 | `Super + Shift + T` | **Dwindle** ↔ **Master** 레이아웃 전환 |
 | `Super + Shift + T` 후 `Super + h/j/k/l` | Master 레이아웃에서 자유롭게 창 배치 |
-| `Super + R` | 두 창의 **위/아래 ↔ 좌/우 분할 방향 전환** (Dwindle) |
+| `Super + R` | 두 창의 **위/아래 ↔ 좌/우 분할 방향 전환** (Dwindle · Master 둘 다) |
 
 ### 작업공간
 
