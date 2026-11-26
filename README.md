@@ -51,6 +51,10 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 > 💡 **꼭 다 있을 필요는 없어요.** 없으면 해당 기능만 동작하지 않을 뿐, 나머지는 잘 작동합니다.
 
+> ℹ️ AUR `brave-bin`은 `yay -Syu brave-bin`으로 업데이트합니다.
+> `brave/brave-flags.conf`의 `--disable-features=OutdatedBuildDetector`가
+> "업데이트를 설치할 수 없습니다" 알림을 숨깁니다 (브라우저 재시작 후 적용).
+
 ---
 
 ## 🧳 다른 머신에서 가져가기
@@ -176,6 +180,11 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 > Latitude 7390에는 미디어 트랙 전용 물리 키가 없다. 위 `Super+Shift` 조합이 실제로 누를 수 있는 키다.
 
+> 상단 바 중앙 미디어 위젯, 클릭/스크롤, 위 키바인드는 **`waybar/media.sh` 하나를 공통으로 쓴다.**
+> 대상은 "재생 중인 플레이어 우선 → 없으면 최근 활성 플레이어(일시정지 포함)" 순으로 고르므로
+> 화면에 보이는 곡과 실제로 조작되는 곡이 어긋나지 않는다.
+> 유튜브 탭 제목의 `(3)` · `- YouTube` 찌꺼기는 정리하고, 일시정지는 보라색으로 구분한다.
+
 ### 트랙패드 제스처
 
 | 제스처 | 기능 |
@@ -200,6 +209,10 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 - 어두운 Dracula 배경 + 블러
 - 5분 자동 잠금 → 10분 자동 절전
 - `Super + Alt + L`로 수동 잠금
+- 절전 재개 시 깨우기 위해 누른 `Space`가 비밀번호 칸으로 들어가지 않도록,
+  절전 직전에 `~/.cache/hypr-wake-space.flag`를 만들고 재개 1초 뒤 지운다.
+  그동안 첫 `Space`만 소비하고, 플래그가 없으면 평소처럼 입력된다.
+  hyprlock은 죽이지 않는다 — 세션 잠금과 잠금화면 프로세스가 그대로 유지된다.
 
 ---
 

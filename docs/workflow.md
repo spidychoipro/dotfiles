@@ -246,3 +246,4 @@ git 기록상 과거 특수 workspace/드롭다운 이력:
 | 7 | appearance(애니메이션/배경) 조정 여부 — ✅ 결정: ① ws 전환 애니메이션 **속도 상향**(애니 유지, 응답성 개선) ② blur/성능 **조건부**(성능 문제 관측 시에만 축소) ③ 미사용 animation leaf **축소**(핵심 유지). 유지: Dracula·배경 순환·focus border·opacity 1.0 | ✅ 결정됨 |
 | 8 | cycle_wallpaper.sh tracked 파일 오염 해결 — **심링크 방식 적용 완료**. hyprpaper.conf·hyprlock.conf의 path가 `~/.config/hypr/current-wallpaper`를 가리키고, 순환 시 심링크만 재지정 → tracked 파일 수정 없음. 인덱스는 `~/.cache/hypr-wallpaper-idx`. | ✅ 구현 완료 |
 | 9 | hyprlock.conf "Status word" label 블록 — ✅ 결정: **제거 유지 + 커밋** (commit `d8b485c`). wallpaper path는 HEAD로 원복해 커밋 오염 제외 | ✅ 결정됨 (커밋 d8b485c) |
+| 10 | 절전 재개 시 wake 키가 비밀번호 칸에 들어가는 문제 + hyprlock 사망 화면 — 원인은 600초 리스너의 `pkill`이었다. 절전 직전에 `~/.cache/hypr-wake-space.flag`를 만들고 재개 1초 뒤 지우는 방식으로 변경. hyprlock은 죽이지 않고, 플래그가 있을 때 첫 `Space`만 소비한다(평상시 타이핑은 그대로). | ✅ 구현 완료, 실제 keypress 확인 완료 (2026-11-26) |

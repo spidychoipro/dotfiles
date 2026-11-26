@@ -59,6 +59,8 @@ local menu        = "rofi -show drun"
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 hl.on("hyprland.start", function()
 	hl.exec_cmd("command -v swayosd-server 2>&1 >/dev/null && swayosd-server --config $HOME/.config/swayosd/config.toml &")
+	-- 최근 활성 플레이어를 미디어 키/waybar 위젯의 공통 대상으로 고정
+	hl.exec_cmd("command -v playerctld >/dev/null 2>&1 && playerctld daemon")
 	hl.exec_cmd("hyprpaper & waybar & swaync & hypridle")
 	hl.exec_cmd("command -v cliphist && wl-paste --watch cliphist store &")
 	hl.exec_cmd("fcitx5 -d")
@@ -312,20 +314,36 @@ hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("swayosd-client --input-volume m
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("swayosd-client --brightness raise"),      { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("swayosd-client --brightness lower"),      { locked = true, repeating = true })
 
--- Requires playerctl. NOTE: Latitude 7390 has NO physical track keys
--- (Dell Technical Guidebook Table 66 has no media-key Fn combo). These only fire
--- on an external Dell keyboard/dock that emits XF86Audio* keysyms.
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+-- 모든 미디어 조작(waybar 위젯 클릭/스크롤 + 키)은 같은 스크립트를 쓴다.
+-- 재생 중인 플레이어를 우선 선택하므로, 화면에 보이는 곡과 조작 대상이 항상 일치한다.
+-- swayosd OSD도 그 대상을 그대로 표시한다.
+local mediaCmd = (os.getenv("HOME") or "/tmp") .. "/.config/waybar/media.sh"
 
--- Accessible track controls for THIS laptop: the keysyms above have no physical
--- key on Latitude 7390. swayosd-client --playerctl shows an OSD and exits 0 even
--- when nothing is playing, unlike plain playerctl (which errors noisily).
-hl.bind(mainMod .. " + SHIFT + Left",  hl.dsp.exec_cmd("swayosd-client --playerctl prev"),       { locked = true })
-hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.exec_cmd("swayosd-client --playerctl next"),       { locked = true })
-hl.bind(mainMod .. " + SHIFT + space", hl.dsp.exec_cmd("swayosd-client --playerctl play-pause"), { locked = true })
+-- NOTE: Latitude 7390 has NO physical track keys (Dell Guidebook Table 66).
+-- These only fire on an external Dell keyboard/dock that emits XF86Audio* keysyms.
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd(mediaCmd .. " next"),       { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd(mediaCmd .. " play-pause"), { locked = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd(mediaCmd .. " play-pause"), { locked = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd(mediaCmd .. " prev"),       { locked = true })
+
+-- Accessible track controls for THIS laptop (no physical media keys).
+hl.bind(mainMod .. " + SHIFT + Left",  hl.dsp.exec_cmd(mediaCmd .. " prev"),       { locked = true })
+hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.exec_cmd(mediaCmd .. " next"),       { locked = true })
+hl.bind(mainMod .. " + SHIFT + space", hl.dsp.exec_cmd(mediaCmd .. " play-pause"), { locked = true })
+
+-- 절전 재개 직후 깨우기 위해 누른 Space는 비밀번호 칸에 넣지 않는다.
+-- hypridle이 절전 직전에 플래그를 만들고 재개 1초 뒤 지우므로, 그 첫 Space만 소비한다.
+-- 플래그가 없는 평상시(비밀번호 타이핑 포함)에는 Space를 그대로 전달한다.
+local wakeSpaceFlag = (os.getenv("HOME") or "/tmp") .. "/.cache/hypr-wake-space.flag"
+hl.bind("space", function()
+    local f = io.open(wakeSpaceFlag, "r")
+    if f then
+        io.close(f)
+        os.remove(wakeSpaceFlag)
+        return { ok = true, pass_event = false }
+    end
+    return { ok = true, pass_event = true }
+end, { locked = true, auto_consuming = true })
 
 
 --------------------------------

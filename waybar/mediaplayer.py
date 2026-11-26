@@ -1,43 +1,65 @@
 #!/usr/bin/env python3
-import subprocess, json
+"""Waybar media widget.
+
+Asks media.sh for the current target, the same script used by click/scroll and
+the keyboard binds. A playing player wins over the recently-active default, so
+the visible track is always the one the controls will act on.
+"""
+import json
+import os
+import re
+import subprocess
+
 from wcwidth import wcswidth
 
 W = 40
+MEDIA_SH = os.path.expanduser("~/.config/waybar/media.sh")
+
+
+def clean(s):
+    """Drop YouTube tab-title noise such as '(3) ', ' - YouTube', '(Lyrics)'."""
+    s = re.sub(r"^\(\d+\)\s*", "", s or "")
+    s = re.sub(r"\s*-\s*YouTube(?:\s+Music)?\s*$", "", s, flags=re.I)
+    s = re.sub(r"\s*\((?:Lyrics|Official\s+(?:Video|Audio)|Audio|MV|HD)\)\s*$",
+               "", s, flags=re.I)
+    return s.strip()
+
 
 def trunc(s, n):
+    """Trim on a word boundary so the bar never ends in a half word."""
     if wcswidth(s) <= n:
         return s
     r = ""
     for c in s:
-        if wcswidth(r + c + "…") > n:
+        if wcswidth(r + c) >= n:
             break
         r += c
-    return r + "…"
+    if " " in r:
+        r = r.rsplit(" ", 1)[0]
+    return r.rstrip(" ,·-") + "…"
+
 
 def get():
     try:
-        o = subprocess.check_output(
-            ["playerctl", "-a", "metadata", "--format",
-             "{{playerName}}|{{status}}|{{artist}}|{{title}}"],
-            stderr=subprocess.DEVNULL, timeout=1
-        ).decode().strip().split("\n")
+        out = subprocess.check_output(
+            [MEDIA_SH, "metadata"],
+            stderr=subprocess.DEVNULL, timeout=2,
+        ).decode().strip()
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired,
             FileNotFoundError):
         return None, None, None
-    p, q = [], []
-    for line in o:
-        if not line:
-            continue
-        parts = line.split("|", 3)
-        if len(parts) < 4:
-            continue
-        n, s, a, t = parts[0], parts[1], parts[2], parts[3]
-        label = f"{a} - {t}" if a else t
-        if s == "Playing":
-            p.append((n, label, s))
-        elif s == "Paused":
-            q.append((n, label, s))
-    return (p or q or [(None, None, None)])[0]
+    parts = out.split("|", 3)
+    if len(parts) < 4:
+        return None, None, None
+    name, status, artist, title = parts
+    artist, title = clean(artist), clean(title)
+    # plasma-browser-integration's "artist" is the YouTube channel name, not the
+    # musician. The title already carries the real artist, so show it alone.
+    if name == "plasma-browser-integration":
+        artist = ""
+    label = f"{artist} - {title}" if artist and artist != title else (title or artist)
+    return name, label or None, status
+
 
 pn, text, status = get()
 if not text:
@@ -49,6 +71,7 @@ else:
         "firefox": "\uF269", "librewolf": "\uF269", "zen": "\uF269",
         "chrom": "\uF268", "brave": "\uF268", "edge": "\uF268",
         "opera": "\uF268", "vivaldi": "\uF268",
+        "plasma-browser-integration": "\uF268",
     }
     icon = "\uF001"
     for k, v in ICON_MAP.items():
@@ -56,7 +79,14 @@ else:
             icon = v
             break
 
-    full = f"{icon} {text}"
-    out = trunc(full, W)
+    state = {"Playing": "재생 중", "Paused": "일시정지"}.get(status, status)
     cls = "paused" if status == "Paused" else "playing"
-    print(json.dumps({"text": out, "tooltip": text, "class": cls}))
+    player_label = {
+        "plasma-browser-integration": "YouTube (Brave)",
+        "brave": "Brave", "spotify": "Spotify",
+    }.get(nl, pn or "미디어")
+    print(json.dumps({
+        "text": trunc(f"{icon} {text}", W),
+        "tooltip": f"{player_label} · {state} · {text}",
+        "class": cls,
+    }))

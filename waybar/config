@@ -90,8 +90,8 @@
         "persistent": true,
         "format": "{}",
         "return-type": "json",
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous"
+        "on-click": "$HOME/.config/waybar/media.sh play-pause",
+        "on-scroll-up": "$HOME/.config/waybar/media.sh next",
+        "on-scroll-down": "$HOME/.config/waybar/media.sh prev"
     }
 }
