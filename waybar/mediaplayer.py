@@ -17,21 +17,26 @@ MEDIA_SH = os.path.expanduser("~/.config/waybar/media.sh")
 
 
 def clean(s):
-    """Drop YouTube tab-title noise such as '(3) ' and ' - YouTube'."""
+    """Drop YouTube tab-title noise such as '(3) ', ' - YouTube', '(Lyrics)'."""
     s = re.sub(r"^\(\d+\)\s*", "", s or "")
     s = re.sub(r"\s*-\s*YouTube(?:\s+Music)?\s*$", "", s, flags=re.I)
+    s = re.sub(r"\s*\((?:Lyrics|Official\s+(?:Video|Audio)|Audio|MV|HD)\)\s*$",
+               "", s, flags=re.I)
     return s.strip()
 
 
 def trunc(s, n):
+    """Trim on a word boundary so the bar never ends in a half word."""
     if wcswidth(s) <= n:
         return s
     r = ""
     for c in s:
-        if wcswidth(r + c + "…") > n:
+        if wcswidth(r + c) >= n:
             break
         r += c
-    return r + "…"
+    if " " in r:
+        r = r.rsplit(" ", 1)[0]
+    return r.rstrip(" ,·-") + "…"
 
 
 def get():
@@ -76,8 +81,12 @@ else:
 
     state = {"Playing": "재생 중", "Paused": "일시정지"}.get(status, status)
     cls = "paused" if status == "Paused" else "playing"
+    player_label = {
+        "plasma-browser-integration": "YouTube (Brave)",
+        "brave": "Brave", "spotify": "Spotify",
+    }.get(nl, pn or "미디어")
     print(json.dumps({
         "text": trunc(f"{icon} {text}", W),
-        "tooltip": f"{pn} · {state} · {text}",
+        "tooltip": f"{player_label} · {state} · {text}",
         "class": cls,
     }))
