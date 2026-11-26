@@ -82,9 +82,15 @@
 
 **플레이어 대상은 `auto` 유지 (고정하지 않음).**
 `swayosd 0.3.2` 소스(`src/actions/mpris.rs`) 기준:
-- `playerctld`가 실행 중이면(지금 실행 중) 그 목록의 첫 번째 플레이어를 쓴다.
+- `playerctld`가 실행 중이면 그 목록의 첫 번째 플레이어를 쓴다.
 - `playerctld`는 **가장 최근에 활성화된 플레이어를 맨 앞에 둔다.**
 - 없으면 `find_active()` = 실제 재생 중인 플레이어로 폴백.
+
+⚠️ 2026-11-26까지 `playerctld`가 **실제로는 실행되지 않고 있었는데 문서만 실행 중이라고 돼 있었다.**
+그 상태에선 두 플레이어가 동시 재생 중이면 이름순으로 Brave가 잡혀 Spotify를 못 조작했다.
+hyprland autostart에 `playerctld daemon`을 추가해 문서대로 동작하게 고쳤다.
+waybar 미디어 위젯도 `playerctl -a` 대신 같은 기본 대상을 보여주도록 바꿔
+화면에 보이는 플레이어와 키/클릭으로 조작되는 플레이어가 항상 일치한다.
 
 → Spotify를 틀면 Spotify, Brave 유튜브를 틀면 Brave를 제어한다.
 `--player spotify`로 고정하면 Brave 소리를 조작할 수 없게 되므로 유지한다.

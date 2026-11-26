@@ -140,6 +140,7 @@
 > **대상 플레이어는 `auto` 유지.** swayosd 0.3.2 소스 기준 `playerctld`가 실행 중이면
 > 그 목록 첫 플레이어(=최근 활성 플레이어), 없으면 실제 재생 중인 플레이어를 고른다.
 > Spotify로 고정하면 Brave 유튜브 소리를 못 조작하므로 고정하지 않는다.
+> `playerctld`는 hyprland autostart에서 `playerctld daemon`으로 띄운다 (2026-11-26 추가).
 
 ---
 
