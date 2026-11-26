@@ -51,6 +51,10 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 
 > 💡 **꼭 다 있을 필요는 없어요.** 없으면 해당 기능만 동작하지 않을 뿐, 나머지는 잘 작동합니다.
 
+> ℹ️ AUR `brave-bin`은 `yay -Syu brave-bin`으로 업데이트합니다.
+> `brave/brave-flags.conf`의 `--disable-features=OutdatedBuildDetector`가
+> "업데이트를 설치할 수 없습니다" 알림을 숨깁니다 (브라우저 재시작 후 적용).
+
 ---
 
 ## 🧳 다른 머신에서 가져가기
