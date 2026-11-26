@@ -48,12 +48,18 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 | **hyprpaper** | 배경화면 |
 | **starship** | 예쁜 터미널 프롬프트 |
 | **Brave** | 기본 브라우저 |
+| **Spotify** | AUR `spotify` + SpotX-Bash 패치 (무료 계정) |
 
 > 💡 **꼭 다 있을 필요는 없어요.** 없으면 해당 기능만 동작하지 않을 뿐, 나머지는 잘 작동합니다.
 
 > ℹ️ AUR `brave-bin`은 `yay -Syu brave-bin`으로 업데이트합니다.
 > `brave/brave-flags.conf`의 `--disable-features=OutdatedBuildDetector`가
 > "업데이트를 설치할 수 없습니다" 알림을 숨깁니다 (브라우저 재시작 후 적용).
+
+> ℹ️ Spotify 업데이트는 패치를 덮어써서 SpotX 효과가 사라집니다.
+> `~/dotfiles/spotx-update.sh --check`로 상태를 보고, `--apply`로 **SpotX가 지원하는 버전까지만**
+> 올린 뒤 패치를 다시 적용합니다. AUR가 아직 지원되지 않는 버전이면 설치하지 않고 멈춥니다.
+> Spotify 실행 중에는 동작하지 않고, Premium 계정은 `--premium`을 붙입니다.
 
 ---
 
