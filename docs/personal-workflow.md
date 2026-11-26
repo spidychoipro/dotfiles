@@ -107,6 +107,9 @@ waybar 미디어 위젯·클릭/스크롤·키바인드가 `waybar/media.sh`라�
 - 기본은 `--check`(상태만 출력)이고, `--apply`에서 SpotX가 지원하는 버전까지만
   `yay -S`로 올린 뒤 SpotX를 다시 실행한다. 지원보다 높은 AUR 버전은 건너뛴다.
 - Spotify가 실행 중이면 중단된다. 종료한 뒤 실행할 것. Premium이면 `--premium`.
+- SpotX가 sudo 암호를 요청할 수 있어 실제 터미널에서 실행해야 한다.
+- 업그레이드 후 옛 백업이 새 클라이언트와 안 맞아 패치가 거부되면,
+  스크립트가 백업을 `~/.local/share/spotx-update/backups/`로 옮기고 새 백업을 만들게 한다 (2026-11-26 수정).
 
 ### 마무리
 - 캡처: `Print`(창), `Super+Shift+S`(영역)

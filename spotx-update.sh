@@ -10,6 +10,8 @@ PATCH_URL="${SPOTX_PATCH_URL:-https://raw.githubusercontent.com/SpotX-Official/S
 PACMAN_BIN="${SPOTX_PACMAN:-pacman}"
 YAY_BIN="${SPOTX_YAY:-yay}"
 CURL_BIN="${SPOTX_CURL:-curl}"
+UNZIP_BIN="${SPOTX_UNZIP:-unzip}"
+BACKUP_ARCHIVE="${SPOTX_BACKUP_ARCHIVE:-$HOME/.local/share/spotx-update/backups}"
 
 MODE=check
 PREMIUM=0
@@ -18,6 +20,8 @@ YES=0
 usage() {
     cat <<'EOF'
 사용법: spotx-update.sh [옵션]
+
+주의: SpotX-Bash가 sudo 암호를 요청할 수 있으니 실제 터미널에서 실행하세요.
 
 옵션:
   --check       상태만 확인하고 끝낸다 (기본)
@@ -29,7 +33,8 @@ usage() {
 환경 변수 (고급):
   SPOTX_SUPPORTED_VERSION  SpotX 지원 버전을 직접 지정 (네트워크 없이 확인할 때)
   SPOTX_CLIENT_ROOT        Spotify 클라이언트 경로 (기본 /opt/spotify)
-  SPOTX_PACMAN / SPOTX_YAY / SPOTX_CURL  사용할 명령 경로
+  SPOTX_PACMAN / SPOTX_YAY / SPOTX_CURL / SPOTX_UNZIP  사용할 명령 경로
+  SPOTX_BACKUP_ARCHIVE  옛 SpotX 백업을 보관할 디렉터리
 EOF
 }
 
@@ -98,9 +103,38 @@ supported_version() {
     printf '%s' "$raw"
 }
 
+# 현재 클라이언트가 실제로 패치됐는지 확인한다. 백업 파일 존재만으로는 부족하다.
+client_patched() {
+    { "$UNZIP_BIN" -p "$CLIENT_ROOT/Apps/xpui.spa" xpui.js xpui-snapshot.js 2>/dev/null || true; } \
+        | grep -F 'SpotX' >/dev/null
+}
+
+# 이전 버전의 백업은 새 클라이언트와 맞지 않아 SpotX가 패치를 거부한다.
+# 삭제하지 않고 사용자 데이터 아래로 옮겨 되돌릴 수 있게 한다.
+archive_backups() {
+    local stamp rel destdir found=0 file
+    for file in "$CLIENT_ROOT/spotify.bak" "$CLIENT_ROOT/Apps/xpui.bak" "$CLIENT_ROOT/Apps/xpui.bak.info"; do
+        [ -e "$file" ] || continue
+        found=1
+        break
+    done
+    [ "$found" -eq 1 ] || return 0
+    stamp="$(date +%Y%m%d-%H%M%S)"
+    for file in "$CLIENT_ROOT/spotify.bak" "$CLIENT_ROOT/Apps/xpui.bak" "$CLIENT_ROOT/Apps/xpui.bak.info"; do
+        [ -e "$file" ] || continue
+        rel="${file#"$CLIENT_ROOT"/}"
+        destdir="$BACKUP_ARCHIVE/$stamp/$(dirname "$rel")"
+        mkdir -p "$destdir"
+        mv -f -- "$file" "$destdir/$(basename "$rel")" \
+            || die "백업을 옮기지 못했습니다: $file"
+    done
+    printf '옛 SpotX 백업을 %s/%s/ 로 보관했습니다.\n' "$BACKUP_ARCHIVE" "$stamp"
+}
+
 command -v "$PACMAN_BIN" >/dev/null 2>&1 || die "$PACMAN_BIN 실행 파일을 찾지 못했습니다."
 command -v "$YAY_BIN"    >/dev/null 2>&1 || die "$YAY_BIN 실행 파일을 찾지 못했습니다."
 command -v "$CURL_BIN"   >/dev/null 2>&1 || die "$CURL_BIN 실행 파일을 찾지 못했습니다."
+command -v "$UNZIP_BIN"  >/dev/null 2>&1 || die "$UNZIP_BIN 실행 파일을 찾지 못했습니다. (SpotX 패치 확인에 필요)"
 
 installed="$(installed_version)"
 [ -n "$installed" ] || die "$PKG 패키지가 설치돼 있지 않습니다."
@@ -130,12 +164,12 @@ if ver_gt "$aur_n" "$inst_n"; then
 fi
 
 # 업그레이드하면 패치가 사라지므로 반드시 다시 적용한다.
+# 백업 파일이 있어도 실제 xpui.spa에 SpotX가 없으면 패치가 필요한 상태다.
 need_patch=0
-if [ "$need_upgrade" -eq 1 ] \
-   || [ ! -f "$CLIENT_ROOT/Apps/xpui.bak" ] \
-   || [ ! -f "$CLIENT_ROOT/spotify.bak" ]; then
+if [ "$need_upgrade" -eq 1 ] || ! client_patched; then
     need_patch=1
 fi
+if client_patched; then patch_state='있음'; else patch_state='없음'; fi
 
 if [ "$need_upgrade" -eq 0 ] && [ "$need_patch" -eq 0 ]; then
     printf '✅ 이미 최신 설치 + SpotX 패치 상태입니다.\n'
@@ -149,7 +183,7 @@ fi
 if [ "$need_patch" -eq 1 ]; then
     flags='--noninteractive'
     [ "$PREMIUM" -eq 1 ] && flags="$flags -p"
-    printf '  2) SpotX-Bash 재적용 (%s)\n' "$flags"
+    printf '  2) 옛 SpotX 백업 보관(있으면) → SpotX-Bash 재적용 (%s, 현재 패치 %s)\n' "$flags" "$patch_state"
 fi
 printf '\n'
 
@@ -159,6 +193,7 @@ if [ "$MODE" = check ]; then
 fi
 
 [ -d "$CLIENT_ROOT/Apps" ] || die "$CLIENT_ROOT/Apps 경로가 없습니다. 이 스크립트는 AUR spotify (/opt/spotify)용입니다."
+[ -w "$CLIENT_ROOT" ]      || die "$CLIENT_ROOT 에 쓸 권한이 없습니다. 권한을 확인하세요."
 [ -w "$CLIENT_ROOT/Apps" ] || die "$CLIENT_ROOT/Apps 에 쓸 권한이 없습니다. 권한을 확인하세요."
 if pgrep -x spotify >/dev/null 2>&1; then
     die "Spotify가 실행 중입니다. 종료한 뒤 다시 실행하세요. (패치 중 파일이 바뀌면 안 됨)"
@@ -182,6 +217,7 @@ fi
 
 if [ "$need_patch" -eq 1 ]; then
     printf '\n▶ SpotX-Bash 재적용...\n'
+    archive_backups
     patch_file="$(mktemp "${TMPDIR:-/tmp}/spotx-patch.XXXXXX")"
     if ! "$CURL_BIN" -fsSL --max-time 30 "$PATCH_URL" -o "$patch_file"; then
         rm -f "$patch_file"
@@ -196,8 +232,8 @@ fi
 
 final="$(installed_version)"
 printf '\n✅ 완료: 설치 %s / SpotX 지원 %s\n' "$final" "$supported"
-if [ -f "$CLIENT_ROOT/Apps/xpui.bak" ]; then
-    printf '   SpotX 백업(xpui.bak) 확인됨. 이제 Spotify를 실행해도 됩니다.\n'
+if client_patched; then
+    printf '   SpotX 패치가 확인됨. 이제 Spotify를 실행해도 됩니다.\n'
 else
-    warn "xpui.bak 이 없습니다. SpotX 패치가 적용되지 않았을 수 있으니 확인하세요."
+    warn "xpui.spa에서 SpotX 패치를 찾지 못했습니다. Spotify를 열기 전에 다시 확인하세요."
 fi

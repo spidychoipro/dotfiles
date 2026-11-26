@@ -60,6 +60,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 > `~/dotfiles/spotx-update.sh --check`로 상태를 보고, `--apply`로 **SpotX가 지원하는 버전까지만**
 > 올린 뒤 패치를 다시 적용합니다. AUR가 아직 지원되지 않는 버전이면 설치하지 않고 멈춥니다.
 > Spotify 실행 중에는 동작하지 않고, Premium 계정은 `--premium`을 붙입니다.
+> SpotX가 `sudo` 암호를 요청할 수 있으니 **터미널에서 직접** 실행하세요.
+> 이전 버전 백업은 삭제하지 않고 `~/.local/share/spotx-update/backups/`에 보관합니다.
 
 ---
 
