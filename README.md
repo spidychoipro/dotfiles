@@ -204,6 +204,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
   절전 직전에 hyprlock을 종료하고 재개 0.3초 후 다시 띄운다 (세션 잠금은 유지).
   `before_sleep_cmd`는 비동기라 실제 종료는 600초 리스너의 `on-timeout`에서 하고,
   플래그(`~/.cache/hyprlock-suspend.flag`)로 절전 중 `lock_cmd`가 다시 띄우지 않게 한다.
+  `before_sleep_cmd`에는 `pkill`을 넣지 않는다 — 절전 중 멈춘 셸이 재개 뒤에 실행되어
+  새로 띄운 잠금화면을 다시 죽일 수 있기 때문.
   잠금화면에서 `Space` 입력 자체는 정상 동작한다.
 
 ---
