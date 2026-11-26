@@ -202,6 +202,8 @@ git clone https://github.com/spidychoipro/dotfiles.git ~/dotfiles
 - `Super + Alt + L`로 수동 잠금
 - 절전 재개 시 깨우기 위해 누른 키가 비밀번호 칸으로 들어가지 않도록,
   절전 직전에 hyprlock을 종료하고 재개 0.3초 후 다시 띄운다 (세션 잠금은 유지).
+  `before_sleep_cmd`는 비동기라 실제 종료는 600초 리스너의 `on-timeout`에서 하고,
+  플래그(`~/.cache/hyprlock-suspend.flag`)로 절전 중 `lock_cmd`가 다시 띄우지 않게 한다.
   잠금화면에서 `Space` 입력 자체는 정상 동작한다.
 
 ---
