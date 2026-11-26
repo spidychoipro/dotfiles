@@ -101,6 +101,13 @@ waybar 미디어 위젯·클릭/스크롤·키바인드가 `waybar/media.sh`라�
 → Spotify를 틀면 Spotify, Brave 유튜브를 틀면 Brave를 제어한다.
 `--player spotify`로 고정하면 Brave 소리를 조작할 수 없게 되므로 유지한다.
 
+#### Spotify 패치 업데이트 (2026-11-26)
+- 설치는 AUR `spotify` + SpotX-Bash 패치(무료 계정 기본).
+- Spotify를 업데이트하면 패치가 덮어써지므로, `spotx-update.sh`로 재패치한다.
+- 기본은 `--check`(상태만 출력)이고, `--apply`에서 SpotX가 지원하는 버전까지만
+  `yay -S`로 올린 뒤 SpotX를 다시 실행한다. 지원보다 높은 AUR 버전은 건너뛴다.
+- Spotify가 실행 중이면 중단된다. 종료한 뒤 실행할 것. Premium이면 `--premium`.
+
 ### 마무리
 - 캡처: `Print`(창), `Super+Shift+S`(영역)
 - 잠금: `Super+Alt+L`
@@ -129,9 +136,9 @@ waybar 미디어 위젯·클릭/스크롤·키바인드가 `waybar/media.sh`라�
 ## 5. 아직 내가 확인할 것
 
 1. `Super+←/→` 실제 키 입력으로 1↔2 왕복 (바인드 등록은 확인됨)
-2. `Super+Shift+←/→/Space` 실제 키 입력으로 트랙 제어 + OSD 확인
+2. `Super+Shift+←/→/Space` 실제 키 입력으로 트랙 제어 + OSD 확인 — 아직 실제 재생으로 안 써봄 (2026-11-26)
 3. 66개 바인드 중 keep/change/delete 표시 → `docs/keybind-inventory.md` 번호로 지정
-4. 볼륨 2% 스텝 체감 확인
+4. 볼륨 2% 스텝 체감 확인 → 완료 ✅ (2026-11-26, 2% 괜찮음)
 5. 실제 두 번째 머신에 설치해 보기 (가짜 홈 시뮬레이션은 통과했음)
 
 > 참고: 56~59번(물리 키 없는 XF86 트랙 바인드)은 **삭제하지 않고 유지**했다.
