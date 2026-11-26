@@ -35,7 +35,7 @@ header "Essential Packages"
 packages=(
   hyprland hyprlock hypridle hyprpaper
   kitty waybar swaync rofi
-  swayosd
+  swayosd playerctl
   cliphist wl-clipboard brightnessctl
   fcitx5 fcitx5-hangul
   starship
@@ -225,6 +225,34 @@ if pacman -Qi spotify >/dev/null 2>&1; then
   fi
 else
   info "spotify not installed (updater stays in dotfiles for other machines)"
+fi
+
+# ─── Runtime Helpers ───────────────────────────────────────
+header "Runtime Helpers"
+
+if command -v hyprshot >/dev/null 2>&1; then
+  pass "hyprshot (Print / Super+Shift+S captures)"
+else
+  warn "hyprshot missing (screenshot binds will fail)"
+fi
+
+if command -v hyprshutdown >/dev/null 2>&1; then
+  pass "hyprshutdown (Super+M fast path)"
+else
+  info "hyprshutdown missing (Super+M falls back to hyprctl exit)"
+fi
+
+if pgrep -x playerctld >/dev/null 2>&1; then
+  pass "playerctld running"
+else
+  warn "playerctld not running (media auto-target may pick the wrong player)"
+fi
+
+portal_ifaces="$(busctl --user introspect org.freedesktop.portal.Desktop /org/freedesktop/portal/desktop 2>/dev/null || true)"
+if printf '%s\n' "$portal_ifaces" | grep -Eq 'org.freedesktop.portal.(Screenshot|ScreenCast)'; then
+  pass "screen-sharing portal available"
+else
+  info "no Screenshot/ScreenCast portal (screen sharing off; hyprshot handles local captures)"
 fi
 
 # ─── Running Processes ───────────────────────────────────
